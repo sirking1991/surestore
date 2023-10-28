@@ -22,10 +22,12 @@ return new class extends Migration
                 ->nullable();
             $table->double('base_price');
             $table->double('addon_price');
-            $table->computed('price', 'base_price + addon_price');
+            $table->double('price')
+                ->virtualAs('base_price + addon_price');
             $table->double('discount')->default(0);
             $table->json('discount_detail');
-            $table->computed('amount', 'price - discount');
+            $table->double('amount')
+                ->virtualAs('price - discount');
             $table->timestamps();
         });
     }
