@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ProductCategory;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,17 @@ class DatabaseSeeder extends Seeder
         // Stores
         Store::factory(20)->create();
 
+        // for each store
+        foreach (Store::all() as $store) {
 
+            // create product category
+            ProductCategory::factory(rand(5, 10))->create(['store_id' => $store->id]);
+            
+            // for each product category, create product
+            // for each product, create product options
+
+            // create order
+                // create 
+        }
     }
 }

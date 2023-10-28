@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('store_id')->index();
-            $table->string('name');
+            $table->string('name')->index();
+            $table->string('slug')->index();
             $table->unsignedBigInteger('parent_id')
                 ->index()
                 ->nullable();
