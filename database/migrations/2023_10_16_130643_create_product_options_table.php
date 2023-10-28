@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->index();
             $table->string('name');
             $table->json('options')
-                ->comment('contains option, uom, addon_price, is_available');
+                ->comment('contains option, uom, addon_price, is_available, image');
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('store_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();
             $table->string('description')->index();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->boolean('available_for_sale')->default(false);
             $table->string('uom')->default('each');
             $table->double('price');
+            $table->json('images');
             $table->timestamps();
             $table->softDeletes();
         });
