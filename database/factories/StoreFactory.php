@@ -26,6 +26,16 @@ class StoreFactory extends Factory
             'about' => fake()->paragraphs(asText:true),
             'meta' => json_encode([]),
             'creator_id' => User::inRandomOrder()->first()->id,
+            'phone' => fake()->phoneNumber(),
+            'email' => fake()->email(),
+            'street' => fake()->streetAddress,
+            'city' => fake()->city,
+            'state' => fake()->stateAbbr,
+            'country' => fake()->country,
+            'postal_code' => fake()->postcode,
+            'facebook' => 'facebook.com/' . Str::slug($name),
+            'instagram' => 'instagram.com/' . Str::slug($name),
+            'tiktok' => 'tiktok.com/' . Str::slug($name),
         ];
     }
 }
