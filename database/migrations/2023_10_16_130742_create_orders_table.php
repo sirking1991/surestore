@@ -28,9 +28,9 @@ return new class extends Migration
                 ->comment('if null, order is draft');
             $table->json('billing_address')->nullable();
             $table->json('shipping_address')->nullable();
-            $table->double('total_item_amount');
+            $table->double('total_item_amount')->default(0);
             $table->double('discount')->default(0);
-            $table->json('discount_detail');
+            $table->json('discount_detail')->nullable();
             $table->json('payment_details')->nullable();
             $table->timestamps();
         });

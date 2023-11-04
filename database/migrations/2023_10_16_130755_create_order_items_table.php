@@ -20,12 +20,12 @@ return new class extends Migration
                 ->index();
             $table->unsignedBigInteger('option_value')
                 ->nullable();
-            $table->double('base_price');
-            $table->double('addon_price');
+            $table->double('base_price')->default(0);
+            $table->double('addon_price')->default(0);
             $table->double('price')
                 ->virtualAs('base_price + addon_price');
             $table->double('discount')->default(0);
-            $table->json('discount_detail');
+            $table->json('discount_detail')->nullable();
             $table->double('amount')
                 ->virtualAs('price - discount');
             $table->timestamps();

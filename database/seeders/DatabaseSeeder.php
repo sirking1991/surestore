@@ -3,11 +3,14 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
 use App\Models\Store;
 use App\Models\User;
+use Database\Factories\OrderItemFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -55,7 +58,21 @@ class DatabaseSeeder extends Seeder
             }
 
             // create order
-                // create 
+            Order::factory(rand(3, 50))->create(['store_id' => $store->id]);
+            // foreach order,  create order items 
+            foreach (Order::where('store_id', $store->id)->get() as $order) {
+                for ($i=0; $i < rand(0,10) ; $i++) { 
+                    $product = Product::where('store_id', $store->id)
+                        ->inRandomOrder()
+                        ->first();
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $product->id,
+                        'base_price' => $product->price
+                    ]);
+                }
+                
+            }
         }
     }
 }
