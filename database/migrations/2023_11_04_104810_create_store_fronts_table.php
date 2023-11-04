@@ -11,7 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
+        Schema::create('store_fronts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('store_id')->index();
+            $table->string('status')
+                ->default('active')
+                ->comment('active, draft');
+            $table->text('about');
+
             $table->string('phone', 50)->nullable();
             $table->string('email', 50)->nullable();
             $table->string('street', 50)->nullable();
@@ -24,6 +31,13 @@ return new class extends Migration
             $table->string('linkedin', 50)->nullable();
             $table->string('twitter', 50)->nullable();
             $table->string('tiktok', 50)->nullable();
+
+            $table->json('contact_details')->nullable();
+            $table->json('banner_products')->nullable();
+            $table->json('month_category')->nullable();
+            $table->json('featured_products')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -32,16 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stores', function (Blueprint $table) {
-            $table->dropColumn([
-                'phone',
-                'email',
-                'facebook',
-                'instagram',
-                'linkedin',
-                'twitter',
-                'tiktok',
-            ]);
-        });
+        Schema::dropIfExists('store_fronts');
     }
 };

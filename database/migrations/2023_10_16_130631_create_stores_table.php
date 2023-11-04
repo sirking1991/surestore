@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->string('slug')->index();
-            $table->text('about');
-            $table->json('meta');
+
             $table->unsignedBigInteger('creator_id')->index();
+
+
             $table->timestamps();
             $table->softDeletes();
         });

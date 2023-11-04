@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
 use App\Models\Store;
+use App\Models\StoreFront;
 use App\Models\User;
 use Database\Factories\OrderItemFactory;
 use Illuminate\Database\Seeder;
@@ -34,6 +35,8 @@ class DatabaseSeeder extends Seeder
 
         // for each store
         foreach (Store::all() as $store) {
+
+            StoreFront::factory(1)->create(['store_id' => $store->id]);
 
             // create product category
             ProductCategory::factory(rand(5, 10))->create(['store_id' => $store->id]);

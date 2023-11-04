@@ -12,8 +12,14 @@ class Store extends Model
 
     protected $guarded = [];
 
+    protected $with = ['storefront'];
+
     function products() {
         return $this->hasMany(Product::class);
+    }
+
+    function storefront() {
+        return $this->hasManager(StoreFront::class);
     }
 
     public function completeAddress(): string
