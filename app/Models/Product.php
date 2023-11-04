@@ -15,4 +15,8 @@ class Product extends Model
     protected $casts = [
         'images' => 'array'
     ];
+
+    function options() {
+        return $this->hasMany(ProductOption::class);
+    }
 }
