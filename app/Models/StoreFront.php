@@ -12,4 +12,10 @@ class StoreFront extends Model
 
     protected $guarded = [];
 
+
+    public function completeAddress(): string
+    {
+        return $this->street . ' ' . $this->city . ' ' . $this->state . ' ' . $this->country . ' ' . $this->postal_code;
+    }
+
 }

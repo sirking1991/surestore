@@ -24,10 +24,10 @@
 </head>
 
 <body>
-    <x-storefront.top-nav :store="$store"/>
+    <x-storefront.top-nav :store="$store"  :storeFront="$storeFront"/>
 
 
-    <x-storefront.header-nav :store="$store"/>
+    <x-storefront.header-nav :store="$store"  :storeFront="$storeFront"/>
 
 
     <!-- Modal -->
@@ -49,16 +49,16 @@
     </div>
 
 
-    <x-storefront.banner-hero :store="$store"/>
+    <x-storefront.banner-hero :store="$store"  :storeFront="$storeFront"/>
 
 
-    <x-storefront.month-category :store="$store" />
+    <x-storefront.month-category :store="$store"  :storeFront="$storeFront" />
 
 
-    <x-storefront.featured-product :store="$store" />
+    <x-storefront.featured-product :store="$store"  :storeFront="$storeFront" />
 
 
-    <x-storefront.footer :store="$store" />
+    <x-storefront.footer :store="$store"  :storeFront="$storeFront" />
 
     <!-- Start Script -->
     <script src="storefront/assets/js/jquery-1.11.0.min.js"></script>

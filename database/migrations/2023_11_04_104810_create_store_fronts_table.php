@@ -19,18 +19,18 @@ return new class extends Migration
                 ->comment('active, draft');
             $table->text('about');
 
-            $table->string('phone', 50)->nullable();
-            $table->string('email', 50)->nullable();
-            $table->string('street', 50)->nullable();
-            $table->string('city', 50)->nullable();
-            $table->string('state', 50)->nullable();
-            $table->string('country', 50)->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
             $table->string('postal_code', 10)->nullable();
-            $table->string('facebook', 50)->nullable();
-            $table->string('instagram', 50)->nullable();
-            $table->string('linkedin', 50)->nullable();
-            $table->string('twitter', 50)->nullable();
-            $table->string('tiktok', 50)->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('tiktok')->nullable();
 
             $table->json('contact_details')->nullable();
             $table->json('banner_products')->nullable();

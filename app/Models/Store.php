@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Product;
+use App\Models\StoreFront;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,18 +14,12 @@ class Store extends Model
 
     protected $guarded = [];
 
-    protected $with = ['storefront'];
-
     function products() {
         return $this->hasMany(Product::class);
     }
 
     function storefront() {
-        return $this->hasManager(StoreFront::class);
+        return $this->hasMany(StoreFront::class);
     }
 
-    public function completeAddress(): string
-    {
-        return $this->street . ' ' . $this->city . ' ' . $this->state . ' ' . $this->country . ' ' . $this->postal_code;
-    }
 }
