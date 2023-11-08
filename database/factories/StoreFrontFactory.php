@@ -28,6 +28,7 @@ class StoreFrontFactory extends Factory
             'facebook' => 'https:://facebook.com/',
             'instagram' => 'https:://instagram.com/',
             'tiktok' => 'https:://tiktok.com/',
+            'month_category' => '[]',
         ];
     }
 }

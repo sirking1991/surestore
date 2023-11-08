@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Stores
-        Store::factory(20)->create();
+        Store::factory(20)->create();        
 
         // for each store
         foreach (Store::all() as $store) {
@@ -76,6 +76,16 @@ class DatabaseSeeder extends Seeder
                 }
                 
             }
+
         }
+
+        // setup mystore
+        $store = Store::inRandomOrder()->first();
+        $categories = ProductCategory::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
+        $store->update(['slug'=>'mystore']);
+        $storeFront = StoreFront::whereStoreId($store->id)->whereStatus('active')->first();
+        $storeFront->update([
+            'month_category' => $categories
+        ]);
     }
 }

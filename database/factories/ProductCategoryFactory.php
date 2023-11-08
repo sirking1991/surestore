@@ -17,10 +17,11 @@ class ProductCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->sentence();
+        $name = fake()->word();
         return [
             'name' => $name,
-            'slug'=> Str::slug($name)
+            'slug'=> Str::slug($name),
+            'image_url' => fake()->imageUrl(format:'jpg', width:800, height:800)
         ];
     }
 }

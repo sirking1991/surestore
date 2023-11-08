@@ -2,6 +2,7 @@
 
 namespace App\View\Components\storefront;
 
+use App\Models\ProductCategory;
 use App\Models\Store;
 use App\Models\StoreFront;
 use Closure;
@@ -23,6 +24,11 @@ class MonthCategory extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.storefront.month-category');
+        $categories = ProductCategory::where('store_id', $this->store->id)
+            ->whereIn('id', json_decode($this->storeFront->month_category))
+            ->limit(3)
+            ->get();
+
+        return view('components.storefront.month-category', ['categories'=>$categories]);
     }
 }

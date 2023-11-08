@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('store_id')->index();
             $table->string('name')->index();
             $table->string('slug')->index();
+            $table->string('image_url')->nullable();
             $table->unsignedBigInteger('parent_id')
                 ->index()
                 ->nullable();
