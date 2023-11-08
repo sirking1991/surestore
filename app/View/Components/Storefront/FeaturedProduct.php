@@ -2,6 +2,7 @@
 
 namespace App\View\Components\storefront;
 
+use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreFront;
 use Closure;
@@ -23,6 +24,11 @@ class FeaturedProduct extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.storefront.featured-product');
+        $products = Product::where('store_id', $this->store->id)
+            ->whereIn('id', json_decode($this->storeFront->featured_products))
+            ->limit(3)
+            ->get();
+
+        return view('components.storefront.featured-product',['products'=>$products]);
     }
 }

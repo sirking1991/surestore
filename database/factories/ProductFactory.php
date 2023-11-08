@@ -29,7 +29,8 @@ class ProductFactory extends Factory
             'images' => json_encode($images),
             'sku' => strtoupper(Str::random()),
             'price' => fake()->randomFloat(nbMaxDecimals:2, min: 10, max: 20000),
-            'available_for_sale' => rand(0,1) == 1,            
+            'available_for_sale' => rand(0,1) == 1,   
+            'rating' => rand(1,5),
         ];
     }
 }
