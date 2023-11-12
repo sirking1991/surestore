@@ -4,9 +4,10 @@ SureStore is multi tenant eCommerce + Store Management System
 
 ## Setup
 - clone repo
+- `composer i`
 - copy `.env.example` to `.env`
+- create a database `surestore`
 - `php artisan migrate:fresh --seed`
-- set one of the store slug to `mystore`
 - add the following to your hosts:
 ```
     127.0.0.1 surestore.online
