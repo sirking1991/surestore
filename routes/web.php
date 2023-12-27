@@ -10,10 +10,10 @@ Route::domain('{store:slug}.' . $domain)
     ->group(function () {
 
         // store frontpage
-        Route::get('/', [StoreFrontController::class, 'index']);
-        Route::get('/about', [StoreFrontController::class, 'about']);
-        Route::get('/shop', [StoreFrontController::class, 'shop']);
-        Route::get('/contact-us', [StoreFrontController::class, 'contactUs']);
+        Route::get('/', [StoreFrontController::class, 'index'])->name('storefront');
+        Route::get('/about', [StoreFrontController::class, 'about'])->name('storefront.about');
+        Route::get('/shop', [StoreFrontController::class, 'shop'])->name('storefront.shop');
+        Route::get('/contact-us', [StoreFrontController::class, 'contactUs'])->name('storefront.contactus');
 
 
     }

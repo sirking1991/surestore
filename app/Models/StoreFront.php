@@ -12,10 +12,17 @@ class StoreFront extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'meta_about' => 'json'
+    ];
 
     public function completeAddress(): string
     {
-        return $this->street . ' ' . $this->city . ' ' . $this->state . ' ' . $this->country . ' ' . $this->postal_code;
+        return $this->street 
+            . ' ' . $this->city 
+            . ' ' . $this->state 
+            . ' ' . $this->country 
+            . ' ' . $this->postal_code;
     }
 
 }

@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class StoreFrontController extends Controller
 {
-    function index(Store $store, Request $request) {
-        $storeFront = StoreFront::where('store_id', $store->id)
-            ->where('status', 'active')
-            ->first();
-            
+    function index(Store $store, Request $request) 
+    {
         return view('storefront.index',[
             'store' => $store,
-            'storeFront' => $storeFront,
+            'storeFront' => StoreFront::where('store_id', $store->id)
+            ->where('status', 'active')
+            ->orderBy('created_at', 'desc')
+            ->first(),
         ]);
     }
 
@@ -23,6 +23,10 @@ class StoreFrontController extends Controller
     {
         return view('storefront.about', [
             'store' => $store,
+            'storeFront' => StoreFront::where('store_id', $store->id)
+                    ->where('status', 'active')
+                    ->orderBy('created_at', 'desc')
+                    ->first()
         ]);
     }
 }
