@@ -18,10 +18,15 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         $name = fake()->word();
+        $imgOptions = [
+            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/category_img_01.jpg',
+            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/category_img_02.jpg',
+            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/category_img_03.jpg',
+        ];
         return [
             'name' => $name,
             'slug'=> Str::slug($name),
-            'image_url' => fake()->imageUrl(format:'jpg', width:800, height:800)
+            'image_url' => $imgOptions[array_rand($imgOptions)]
         ];
     }
 }

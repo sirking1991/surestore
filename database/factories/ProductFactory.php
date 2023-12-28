@@ -19,8 +19,13 @@ class ProductFactory extends Factory
     {
         $name = fake()->sentence();
         $images = [];
+        $imgOptions = [
+            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/feature_prod_01.jpg',
+            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/feature_prod_02.jpg',
+            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/feature_prod_03.jpg',
+        ];
         for ($i = 0; $i < rand(3,10); $i++) {
-            $images[] = fake()->imageUrl(format:'jpg');
+            $images[] = $imgOptions[array_rand($imgOptions)];
         }
         return [
             'name' => $name,
