@@ -17,7 +17,7 @@ class StoreFrontFactory extends Factory
     public function definition(): array
     {
         return [
-            'meta_about' => json_encode(
+            'meta_about' => 
                 [
                     'text' => fake()->paragraphs(asText: true),
                     'image' => 'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/about-hero.svg',
@@ -31,7 +31,7 @@ class StoreFrontFactory extends Factory
                         ]
                     ]
                 ]
-            ),
+            ,
             'phone' => fake()->phoneNumber(),
             'email' => fake()->email(),
             'street' => fake()->streetAddress,
