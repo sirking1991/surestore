@@ -80,10 +80,20 @@ class DatabaseSeeder extends Seeder
         }
 
         // setup mystore
-        $store = Store::first();
+        $store = Store::find(1);
         $categories = ProductCategory::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
         $featProd = Product::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
         $store->update(['slug'=>'mystore']);
+        $storeFront = StoreFront::whereStoreId($store->id)->whereStatus('active')->first();
+        $storeFront->update([
+            'month_category' => $categories,
+            'featured_products' => $featProd,
+        ]);
+        // setup yourstore
+        $store = Store::find(2);
+        $categories = ProductCategory::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
+        $featProd = Product::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
+        $store->update(['slug'=>'yourstore']);
         $storeFront = StoreFront::whereStoreId($store->id)->whereStatus('active')->first();
         $storeFront->update([
             'month_category' => $categories,
