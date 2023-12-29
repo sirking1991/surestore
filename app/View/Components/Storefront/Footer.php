@@ -11,6 +11,7 @@ use Illuminate\View\Component;
 class Footer extends Component
 {
     public $storeFront;
+    public $showCategories = true;
     /**
      * Create a new component instance.
      */
