@@ -22,57 +22,33 @@
         </div>
     </section>
     
-    @php
-        $services = $storeFront->meta_about['our_services'];
-    @endphp
+    @php $ourServices = $storeFront->meta_about['our_services']; @endphp            
     <section class="container py-5">
         <div class="row text-center pt-5 pb-3">
             <div class="col-lg-6 m-auto">
                 <h1 class="h1">Our Services</h1>
-                <p>{!! $services['text'] !!} </p>
+                <p>{!! $ourServices['text'] !!} </p>
             </div>
         </div>
-        <div class="row">
-    
+        <div class="row">            
+            @foreach ($ourServices['services'] as $service)
             <div class="col-md-6 col-lg-3 pb-5">
                 <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fa fa-truck"></i></div>
-                    <h2 class="h5 mt-4 text-center">Delivery Services</h2>
+                    <div class="h1 text-success text-center"><i class="fa {{ $service['icon'] }}"></i></div>
+                    <h2 class="h5 mt-4 text-center">{{ $service['text'] }}</h2>
                 </div>
-            </div>
-    
-            <div class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fas fa-exchange-alt"></i></div>
-                    <h2 class="h5 mt-4 text-center">Shipping &amp; Return</h2>
-                </div>
-            </div>
-    
-            <div class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fa fa-percent"></i></div>
-                    <h2 class="h5 mt-4 text-center">Promotion</h2>
-                </div>
-            </div>
-    
-            <div class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fa fa-user"></i></div>
-                    <h2 class="h5 mt-4 text-center">24 Hours Service</h2>
-                </div>
-            </div>
+            </div>                
+            @endforeach
         </div>
     </section>
     
+    @php $ourBrands = $storeFront->meta_about['our_brands']; @endphp            
     <section class="bg-light py-5">
         <div class="container my-4">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
                     <h1 class="h1">Our Brands</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        Lorem ipsum dolor sit amet.
-                    </p>
+                    <p>{!! $ourBrands['text'] !!}</p>
                 </div>
                 <div class="col-lg-9 m-auto tempaltemo-carousel">
                     <div class="row d-flex flex-row">
@@ -93,59 +69,14 @@
                                     <!--First slide-->
                                     <div class="carousel-item active">
                                         <div class="row">
+                                            @foreach ($ourBrands['images'] as $brandImg)
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_01.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_02.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_03.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_04.png" alt="Brand Logo"></a>
-                                            </div>
+                                                <a href="#"><img class="img-fluid brand-img" src="{{ $brandImg }}" alt="Brand Logo"></a>
+                                            </div>                                                
+                                            @endforeach
                                         </div>
                                     </div>
                                     <!--End First slide-->
-    
-                                    <!--Second slide-->
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_01.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_02.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_03.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_04.png" alt="Brand Logo"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Second slide-->
-    
-                                    <!--Third slide-->
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_01.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_02.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_03.png" alt="Brand Logo"></a>
-                                            </div>
-                                            <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_04.png" alt="Brand Logo"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Third slide-->
     
                                 </div>
                                 <!--End Slides-->

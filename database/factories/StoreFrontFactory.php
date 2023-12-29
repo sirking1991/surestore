@@ -29,6 +29,15 @@ class StoreFrontFactory extends Factory
                             ['icon'=>'fa-percent', 'text'=>'Promotion'],
                             ['icon'=>'fa-user', 'text'=>'24 Hours Service'],
                         ]
+                    ],
+                    'our_brands' => [
+                        'text' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod Lorem ipsum dolor sit amet.</p>',
+                        'images' => [
+                            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_01.png',
+                            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_02.png',
+                            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_03.png',
+                            'https://templatemo.com/templates/templatemo_559_zay_shop/assets/img/brand_04.png',
+                        ]                        
                     ]
                 ]
             ,
