@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <x-storefront.top-nav :store="$store"  :storeFront="$storeFront"/>
+    <x-storefront.top-nav :store="$store"/>
 
-    <x-storefront.header-nav :store="$store"  :storeFront="$storeFront"/>
+    <x-storefront.header-nav :store="$store"/>
 
     <section class="bg-success py-5">
         <div class="container">
@@ -99,6 +99,6 @@
 
 
 
-    <x-storefront.footer :store="$store"  :storeFront="$storeFront" />
+    <x-storefront.footer :store="$store" />
 
 @endsection

@@ -16,7 +16,7 @@ class MonthCategory extends Component
      * Create a new component instance.
      */
     public function __construct(public Store $store) {
-        $this->storeFront = $store->activeFrontstore();
+        $this->storeFront = $store->activeStorefront();
     }
 
     /**
