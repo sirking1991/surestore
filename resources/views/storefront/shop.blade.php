@@ -74,11 +74,11 @@
                                 </ul>
                                 <ul class="list-unstyled d-flex justify-content-center mb-1">
                                     <li>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-warning fa fa-star"></i>
-                                        <i class="text-muted fa fa-star"></i>
-                                        <i class="text-muted fa fa-star"></i>
+                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=1, "text-muted"=>$product->rating<1])></i>
+                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=2, "text-muted"=>$product->rating<2])></i>
+                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=3, "text-muted"=>$product->rating<3])></i>
+                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=4, "text-muted"=>$product->rating<4])></i>
+                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=5, "text-muted"=>$product->rating<5])></i>
                                     </li>
                                 </ul>
                                 <p class="text-center mb-0">{{ number_format($product->price,2) }}</p>
@@ -88,7 +88,8 @@
                     @endforeach
                 </div>
                 <div div="row">
-                    <ul class="pagination pagination-lg justify-content-end">
+                    {{$products->links()}}
+                    <ul class="d-none pagination pagination-lg justify-content-end">
                         <li @class(["page-item"])>
                             <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"><< Previous</a>
                         </li>

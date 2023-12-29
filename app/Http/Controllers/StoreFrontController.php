@@ -25,7 +25,8 @@ class StoreFrontController extends Controller
 
     function shop(Store $store, Request $request)
     {
-        $products = $store->products()->paginate(9);
+        $products = $store->products()->paginate(9)->withQueryString();
+
         return view('storefront.shop', [
             'store' => $store,
             'products' => $products
