@@ -14,6 +14,10 @@ class Store extends Model
 
     protected $guarded = [];
 
+    function categories() {
+        return $this->hasMany(ProductCategory::class);
+    }
+
     function products() {
         return $this->hasMany(Product::class);
     }
