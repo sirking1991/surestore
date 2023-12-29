@@ -15,7 +15,7 @@
                 <div class="card h-100">
                     <a href="shop-single.html">
                         @php
-                            $images = json_decode($product->images);
+                            $images = $product->images;
                         @endphp
                         <img src="{{$images[0]}}" class="card-img-top" alt="{{$product->name}}">
                     </a>
