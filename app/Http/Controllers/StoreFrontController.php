@@ -11,8 +11,7 @@ class StoreFrontController extends Controller
     function index(Store $store, Request $request) 
     {
         return view('storefront.index',[
-            'store' => $store,
-            'storeFront' => $store->activeStorefront(),
+            'store' => $store
         ]);
     }
 
@@ -26,7 +25,7 @@ class StoreFrontController extends Controller
 
     function shop(Store $store, Request $request)
     {
-        return view('storefront.about', [
+        return view('storefront.shop', [
             'store' => $store,
         ]);
     }    
