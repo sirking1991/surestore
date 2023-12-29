@@ -13,6 +13,7 @@ class Store extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+    protected $activeStorefront;
 
     function categories() {
         return $this->hasMany(ProductCategory::class);
@@ -22,8 +23,17 @@ class Store extends Model
         return $this->hasMany(Product::class);
     }
 
-    function storefront() {
+    function storefronts() {
         return $this->hasMany(StoreFront::class);
+    }
+
+    function activeStorefront() {
+        if (! $this->activeStorefront){
+            $this->activeStorefront = $this->storefronts()->where('status', 'active')
+                ->orderBy('created_at', 'desc')
+                ->first();
+        }
+        return $this->activeStorefront;
     }
 
 }

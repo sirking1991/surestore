@@ -11,13 +11,13 @@ use Illuminate\View\Component;
 
 class FeaturedProduct extends Component
 {
+    public $storeFront;
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public Store $store, 
-        public StoreFront $storeFront
-    ) {}
+    public function __construct(public Store $store) {
+        $this->storeFront = $store->activeStorefront();
+    }
 
     /**
      * Get the view / contents that represent the component.

@@ -12,10 +12,7 @@ class StoreFrontController extends Controller
     {
         return view('storefront.index',[
             'store' => $store,
-            'storeFront' => StoreFront::where('store_id', $store->id)
-            ->where('status', 'active')
-            ->orderBy('created_at', 'desc')
-            ->first(),
+            'storeFront' => $store->activeStorefront(),
         ]);
     }
 
@@ -23,10 +20,14 @@ class StoreFrontController extends Controller
     {
         return view('storefront.about', [
             'store' => $store,
-            'storeFront' => StoreFront::where('store_id', $store->id)
-                    ->where('status', 'active')
-                    ->orderBy('created_at', 'desc')
-                    ->first()
+            'storeFront' => $store->activeStorefront(),
         ]);
     }
+
+    function shop(Store $store, Request $request)
+    {
+        return view('storefront.about', [
+            'store' => $store,
+        ]);
+    }    
 }
