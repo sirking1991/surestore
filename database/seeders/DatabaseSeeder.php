@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
         $store = Store::find(1);
         $categories = ProductCategory::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
         $featProd = Product::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
-        $store->update(['slug'=>'mystore']);
+        $store->update(['name'=>'My Store', 'slug'=>'mystore']);
         $storeFront = StoreFront::whereStoreId($store->id)->whereStatus('active')->first();
         $storeFront->update([
             'month_category' => $categories,
@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
         $store = Store::find(2);
         $categories = ProductCategory::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
         $featProd = Product::where('store_id', $store->id)->inRandomOrder()->limit(3)->get()->pluck('id')->toArray();
-        $store->update(['slug'=>'yourstore']);
+        $store->update(['name'=>'Your Store', 'slug'=>'yourstore']);
         $storeFront = StoreFront::whereStoreId($store->id)->whereStatus('active')->first();
         $storeFront->update([
             'month_category' => $categories,
