@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('uom')->default('each');
             $table->double('price');
             $table->json('images');
-            $table->tinyInteger('rating')->default(1);
+            $table->double('rating',1)->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
