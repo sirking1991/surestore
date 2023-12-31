@@ -62,11 +62,7 @@
                                 </ul>
                                 <ul class="list-unstyled d-flex justify-content-center mb-1">
                                     <li>
-                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=1, "text-muted"=>$product->rating<1])></i>
-                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=2, "text-muted"=>$product->rating<2])></i>
-                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=3, "text-muted"=>$product->rating<3])></i>
-                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=4, "text-muted"=>$product->rating<4])></i>
-                                        <i @class(["fa fa-star", "text-warning"=>$product->rating>=5, "text-muted"=>$product->rating<5])></i>
+                                        <x-storefront.product-stars :rating="$product->rating" />
                                     </li>
                                 </ul>
                                 <p class="text-center mb-0">{{ number_format($product->price,2) }}</p>
