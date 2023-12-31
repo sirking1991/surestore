@@ -22,9 +22,12 @@
 
             <div @class(["col-md-4 pt-5", "d-none"=>!$showCategories])>
                 <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                
                 <ul class="list-unstyled text-light footer-link-list">
                     @foreach ($store->categories as $category)
-                        <li><a class="text-decoration-none" href="#">{{ $category->name }}</a></li>    
+                    <a href="{{ url('shop'.'?category-slug=' . $category->slug) }}" class="text-decoration-none">
+                        <li>{{ $category->name }}</li>    
+                    </a>
                     @endforeach
                 </ul>
             </div>
