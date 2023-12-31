@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
-                    <img class="card-img img-fluid" src="assets/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
+                    <img class="card-img img-fluid" src="{{$product->images[0]}}" alt="Card image cap" id="product-detail">
                 </div>
                 <div class="row">
                     <!--Start Controls-->
@@ -25,72 +25,22 @@
                     <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
                         <!--Start Slides-->
                         <div class="carousel-inner product-links-wap" role="listbox">
-
-                            <!--First slide-->
-                            <div class="carousel-item">
+                            
+                            @foreach (array_chunk((array)$product->images, 3) as $key => $imgChunk)
+                            <!-- slide {{$key+1}}-->
+                            <div @class(["carousel-item", "active"=>$key!=1])>
                                 <div class="row">
+                                    @foreach ($imgChunk as $img)
                                     <div class="col-4">
                                         <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_01.jpg" alt="Product Image 1">
+                                            <img class="card-img img-fluid" src="{{$img}}" alt="{{ $product->name }}">
                                         </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_02.jpg" alt="Product Image 2">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_03.jpg" alt="Product Image 3">
-                                        </a>
-                                    </div>
+                                    </div>                                        
+                                    @endforeach
                                 </div>
                             </div>
-                            <!--/.First slide-->
-
-                            <!--Second slide-->
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_04.jpg" alt="Product Image 4">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_05.jpg" alt="Product Image 5">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_06.jpg" alt="Product Image 6">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.Second slide-->
-
-                            <!--Third slide-->
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_07.jpg" alt="Product Image 7">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_08.jpg" alt="Product Image 8">
-                                        </a>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="#">
-                                            <img class="card-img img-fluid" src="assets/img/product_single_09.jpg" alt="Product Image 9">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.Third slide-->
+                            <!--/. slide {{$key+1}}-->
+                            @endforeach
                         </div>
                         <!--End Slides-->
                     </div>
@@ -109,48 +59,63 @@
             <div class="col-lg-7 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="h2">Active Wear</h1>
-                        <p class="h3 py-2">$25.00</p>
-                        <p class="py-2">
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-warning"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
-                        </p>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Brand:</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted"><strong>Easy Wear</strong></p>
-                            </li>
-                        </ul>
+                        <h1 class="h2">{{ $product->name }}</h1>
+                        <p class="h3 py-2">{{ number_format($product->price,2) }}</p>
+                        
+                        <section @class(["mt-2", "d-none"=>$product->rating==0])>
+                            <x-storefront.product-stars :rating="$product->rating" />
+                            <span class="list-inline-item text-dark">
+                                Rating {{$product->rating}}
+                            </span>
+                        </section>
 
-                        <h6>Description:</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse. Donec condimentum elementum convallis. Nunc sed orci a diam ultrices aliquet interdum quis nulla.</p>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <h6>Avaliable Color :</h6>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted"><strong>White / Black</strong></p>
-                            </li>
-                        </ul>
+                        <section @class(["mt-2", "d-none"=>!$product->sku])>
+                            <h6>SKU:</h6>
+                            <p>{!! $product->sku !!}</p>
+                        </section>
 
-                        <h6>Specification:</h6>
-                        <ul class="list-unstyled pb-3">
-                            <li>Lorem ipsum dolor sit</li>
-                            <li>Amet, consectetur</li>
-                            <li>Adipiscing elit,set</li>
-                            <li>Duis aute irure</li>
-                            <li>Ut enim ad minim</li>
-                            <li>Dolore magna aliqua</li>
-                            <li>Excepteur sint</li>
-                        </ul>
+                        <section @class(["mt-2", "d-none"=>!$product->description])>
+                            <h6>Description:</h6>
+                            <p>{!! $product->description !!}</p>
+                        </section>
 
-                        <form action="" method="GET">
+                        <section @class(["mt-2", "d-none"=>!$product->options])>
+                            <div class="accordion" id="accordionOptions">
+                                @foreach ($product->options as $key => $option)
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" aria-expanded="true" aria-controls="collapse{{ $key }}">
+                                      {{ Str::title($option->name) }}
+                                    </button>
+                                  </h2>
+                                  <div id="collapse{{ $key }}" class="accordion-collapse collapse show" data-bs-parent="#accordionOptions">
+                                    <div class="accordion-body">
+                                        @foreach ((array)$option->options as $optionItem)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadio{{ $optionItem['value'] }}" id="flexRadio{{ $optionItem['value'] }}">
+                                            <label class="form-check-label" for="flexRadio{{$optionItem['value']}}">
+                                                {{ $optionItem['value'] }}
+                                                <span @class(['d-none'=>$optionItem['addon_price']==0])>
+                                                + {{ number_format($optionItem['addon_price'],2) }}
+                                                </span>
+                                            </label>
+                                        </div>                                            
+                                        @endforeach
+                                    </div>
+                                  </div>
+                                </div>
+                                @endforeach
+                              </div>
+                        </section>
+
+                        <section>
+                            <button type="button" class="mt-5 float-end btn btn-success btn-lg" value="addtocard">
+                                <i class="bi bi-cart-plus"></i> Add To Cart
+                            </button>
+                        </section>
+                        
+
+                        <form class="d-none" action="" method="GET">
                             <input type="hidden" name="product-title" value="Activewear">
                             <div class="row">
                                 <div class="col-auto">

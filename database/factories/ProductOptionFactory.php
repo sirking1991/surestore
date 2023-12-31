@@ -21,20 +21,20 @@ class ProductOptionFactory extends Factory
                 fake()->randomElements(
                     count:rand(1,5), 
                     array:[
-                        ['name' => 'red', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['name' => 'green', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['name' => 'blue', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['name' => 'cyan', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['name' => 'magenta', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['name' => 'yellow', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['name' => 'black', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'red', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'green', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'blue', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'cyan', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'magenta', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'yellow', 'addon_price' => fake()->randomFloat(0, 1000)],
+                        ['value' => 'black', 'addon_price' => fake()->randomFloat(0, 1000)],
                     ]
                 )
             ],
             'sizes' => [
-                ['name' => 'small', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['name' => 'medium', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['name' => 'large', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'small', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'medium', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'large', 'addon_price' => fake()->randomFloat(0, 1000)],
             ],
         ];
         $o = array_rand($options);
@@ -42,7 +42,7 @@ class ProductOptionFactory extends Factory
         
         return [
             'name' => $o,
-            'options' =>json_encode($option)
+            'options' =>$option
         ];
     }
 }

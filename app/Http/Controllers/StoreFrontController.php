@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Store;
 use App\Models\StoreFront;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class StoreFrontController extends Controller
@@ -47,7 +48,9 @@ class StoreFrontController extends Controller
     function product(Store $store, Product $product)
     {
         $product->load(['category','options']);
-
-        return view('storefront.product', ['product'=>$product]);
+        return view('storefront.product', [
+            'store' => $store,
+            'product'=>$product
+        ]);
     }
 }
