@@ -25,8 +25,19 @@ class StoreFrontController extends Controller
 
     function shop(Store $store, Request $request)
     {
-        $products = $store->products()->paginate(9)->withQueryString();
+        $category = null;
+        if($request->{'category-slug'}){
+            $category = $store
+                ->categories->where('slug', $request->{'category-slug'})
+                ->first();
+        }
 
+        $products = $store
+            ->products()
+            ->when($category, fn($q) => $q->where('category_id', $category->id))
+            ->when($request->search, fn($q) => $q->where('name', 'like', '%'.$request->search.'%'))
+            ->simplePaginate(9)
+            ->withQueryString();
         return view('storefront.shop', [
             'store' => $store,
             'products' => $products
