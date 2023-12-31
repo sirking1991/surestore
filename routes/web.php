@@ -13,6 +13,7 @@ Route::domain('{store:slug}.' . $domain)
         Route::get('/', [StoreFrontController::class, 'index'])->name('storefront');
         Route::get('/about', [StoreFrontController::class, 'about'])->name('storefront.about');
         Route::get('/shop', [StoreFrontController::class, 'shop'])->name('storefront.shop');
+        Route::get('/product/{product:slug}', [StoreFrontController::class, 'product'])->name('storefront.product');
         Route::get('/contact-us', [StoreFrontController::class, 'contactUs'])->name('storefront.contactus');
 
 

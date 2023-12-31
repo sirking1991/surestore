@@ -43,4 +43,11 @@ class StoreFrontController extends Controller
             'products' => $products
         ]);
     }    
+
+    function product(Store $store, Product $product)
+    {
+        $product->load(['category','options']);
+
+        return view('storefront.product', ['product'=>$product]);
+    }
 }

@@ -17,6 +17,10 @@ class Product extends Model
         'images' => AsArrayObject::class,
     ];
 
+    function category() {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
     function options() {
         return $this->hasMany(ProductOption::class);
     }
