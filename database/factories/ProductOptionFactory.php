@@ -16,20 +16,15 @@ class ProductOptionFactory extends Factory
      */
     public function definition(): array
     {
-        $options = [
+        $availableOptions = [
             'colors' => [
-                fake()->randomElements(
-                    count:rand(1,5), 
-                    array:[
-                        ['value' => 'red', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['value' => 'green', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['value' => 'blue', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['value' => 'cyan', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['value' => 'magenta', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['value' => 'yellow', 'addon_price' => fake()->randomFloat(0, 1000)],
-                        ['value' => 'black', 'addon_price' => fake()->randomFloat(0, 1000)],
-                    ]
-                )
+                ['value' => 'red', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'green', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'blue', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'cyan', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'magenta', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'yellow', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'black', 'addon_price' => fake()->randomFloat(0, 1000)],
             ],
             'sizes' => [
                 ['value' => 'small', 'addon_price' => fake()->randomFloat(0, 1000)],
@@ -37,12 +32,12 @@ class ProductOptionFactory extends Factory
                 ['value' => 'large', 'addon_price' => fake()->randomFloat(0, 1000)],
             ],
         ];
-        $o = array_rand($options);
-        $option = $options[$o];
+        $o = array_rand($availableOptions);
+        $option = $availableOptions[$o];
         
         return [
             'name' => $o,
-            'options' =>$option
+            'options' => $availableOptions[$o]
         ];
     }
 }
