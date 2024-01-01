@@ -18,18 +18,18 @@ class ProductOptionFactory extends Factory
     {
         $availableOptions = [
             'colors' => [
-                ['value' => 'red', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'green', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'blue', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'cyan', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'magenta', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'yellow', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'black', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'red', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'green', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'blue', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'cyan', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'magenta', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'yellow', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'black', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
             ],
             'sizes' => [
-                ['value' => 'small', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'medium', 'addon_price' => fake()->randomFloat(0, 1000)],
-                ['value' => 'large', 'addon_price' => fake()->randomFloat(0, 1000)],
+                ['value' => 'small', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'medium', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
+                ['value' => 'large', 'addon_price' => round(fake()->randomFloat(0, 1000)/100,2)],
             ],
         ];
         $o = array_rand($availableOptions);

@@ -53,4 +53,30 @@ class StoreFrontController extends Controller
             'product'=>$product
         ]);
     }
+
+    function addToCart(Store $store, Request $request) {
+        $cart = json_decode(session('cart', ''));
+        if (!$cart) $cart = ['items'=>[], 'discount'=>0];
+
+        $product = Product::with('options')
+            ->where('store_id', $store->id)
+            ->where('id', $request->product_id)
+            ->first();
+
+        if (!$product) {
+            return back()->with('error', 'An error occured while adding product to cart');
+        }
+
+        $cart['items'][] = [
+            'product' => ['id'=>$request->product_id, 'name'=>$product->name, 'sku'=>$product->sku],            
+            'options' => [],
+            'discount' => 0,
+            'price' => $product->price,
+            'qty' => $request->qty,            
+        ];
+
+        session(['cart'=>json_encode($cart)]);
+
+        return back();
+    }
 }

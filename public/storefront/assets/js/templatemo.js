@@ -53,5 +53,12 @@ $(document).ready(function() {
       return false;
     });
     // End roduct detail
+    
+    // Cart canvas
+    $('a.cart-canvas').click(function(){
+      const offcanvas = document.getElementById('offcanvasCart');
+      $(offcanvas).toggle()
+    });
+    // End Cart canvas
 
 });

@@ -3,6 +3,8 @@
 @section('content')
     <x-storefront.search-modal />
 
+    <x-storefront.cart />
+
     <x-storefront.top-nav :store="$store"/>
 
     <x-storefront.header-nav :store="$store"/>
