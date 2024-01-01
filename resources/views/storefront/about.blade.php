@@ -1,6 +1,7 @@
 @extends('storefront.layout')
 
 @section('content')
+    <x-storefront.search-modal />
 
     <x-storefront.top-nav :store="$store"/>
 

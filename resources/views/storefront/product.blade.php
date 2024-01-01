@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <x-storefront.search-modal />
+
     <x-storefront.top-nav :store="$store"/>
 
     <x-storefront.header-nav :store="$store"/>
@@ -79,6 +81,10 @@
                             <p>{!! $product->description !!}</p>
                         </section>
 
+                        <form method="POST" action="/add-to-cart">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
+
                         <section @class(["mt-2", "d-none"=>!$product->options])>
                             <div class="accordion" id="accordionOptions">
                                 @foreach ($product->options as $key => $option)
@@ -97,9 +103,11 @@
                                             <input 
                                                 class="form-check-input" 
                                                 type="radio" 
-                                                name="flexRadio{{ Str::slug($option->name) }}" 
-                                                id="flexRadio{{ $optionItem['value'] }}">
-                                            <label class="form-check-label" for="flexRadio{{ $optionItem['value'] }}">
+                                                name="{{ Str::slug($option->name) }}" 
+                                                value="{{ $optionItem['value'] }}"
+                                                id="{{ $optionItem['value'] }}"
+                                                />
+                                            <label class="form-check-label" for="{{ $optionItem['value'] }}">
                                                 {{ Str::title($optionItem['value']) }}
                                                 <span @class(['text-muted', 'd-none'=>$optionItem['addon_price']==0])>+ {{ number_format($optionItem['addon_price'],2) }}</span>
                                             </label>
@@ -112,12 +120,40 @@
                               </div>
                         </section>
 
-                        <section>
-                            <button type="button" class="mt-5 float-end btn btn-success btn-lg" value="addtocard">
-                                <i class="bi bi-cart-plus"></i> Add To Cart
-                            </button>
+                        <section @class(["mt-3"])>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Price: <span class="price">{{ number_format($product->price,2) }}</span>
+                                </div>
+                                <div class="col-4">
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item text-right">
+                                            Quantity
+                                            <input type="hidden" name="qty" id="qty" value="1">
+                                        </li>
+                                        <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                                        <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                                    </ul>
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="mt-5 float-end btn btn-success" value="addtocard">
+                                        <i class="bi bi-cart-plus"></i> Add To Cart
+                                    </button>
+                                </div>
+                            </div>
+
                         </section>
+
+                        </form>
                         
+                        @if (session('error'))
+                            <section @class(["mt-3"])>
+                                <div class="alert alert-danger" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            </section>
+                        @endif
                     </div>
                 </div>
             </div>
