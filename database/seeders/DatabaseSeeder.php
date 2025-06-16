@@ -35,5 +35,13 @@ class DatabaseSeeder extends Seeder
             SupplierSeeder::class,
             StorageSeeder::class,
         ]);
+        
+        // Run purchase-related seeders in logical order
+        $this->call([
+            PurchaseOrderSeeder::class,    // First purchase orders
+            PurchaseDeliverySeeder::class, // Then purchase deliveries
+            PurchaseInvoiceSeeder::class,  // Then purchase invoices
+            DisbursementSeeder::class,     // Finally disbursements
+        ]);
     }
 }

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('sort_order')->default(0);
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

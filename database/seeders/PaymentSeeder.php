@@ -40,11 +40,19 @@ class PaymentSeeder extends Seeder
                     $invoicePayments = Payment::where('invoice_id', $invoice->id)->get();
                     $totalPaid = $invoicePayments->sum('amount');
                     
+                    $newStatus = $invoice->status; // Keep current status as default
+                    
+                    if ($totalPaid >= $invoice->total) {
+                        $newStatus = 'paid';
+                    } elseif ($totalPaid > 0) {
+                        // If partially paid but not fully, mark as 'sent' instead of 'partial'
+                        $newStatus = 'sent';
+                    }
+                    
                     $invoice->update([
                         'amount_paid' => $totalPaid,
                         'amount_due' => $invoice->total - $totalPaid,
-                        'status' => $totalPaid >= $invoice->total ? 'paid' : 
-                                   ($totalPaid > 0 ? 'partial' : $invoice->status)
+                        'status' => $newStatus
                     ]);
                 }
             }
