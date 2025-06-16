@@ -43,5 +43,12 @@ class DatabaseSeeder extends Seeder
             PurchaseInvoiceSeeder::class,  // Then purchase invoices
             DisbursementSeeder::class,     // Finally disbursements
         ]);
+        
+        // Run production-related seeders
+        $this->call([
+            ProductionSeeder::class,       // Production records with materials and products
+            WorkOrderSeeder::class,        // Work orders linked to productions
+            WorkOrderItemSeeder::class,    // Work order items linked to work orders
+        ]);
     }
 }
