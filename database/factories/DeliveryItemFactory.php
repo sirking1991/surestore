@@ -5,6 +5,8 @@ namespace Database\Factories;
 use App\Models\Delivery;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Storage;
+use App\Models\StorageLocation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,10 +29,23 @@ class DeliveryItemFactory extends Factory
         $weightUnits = ['kg', 'g', 'lb', 'oz'];
         $volumeUnits = ['m3', 'cm3', 'ft3', 'in3'];
         
+        // Get a random storage and one of its locations if any exist
+        $storage = Storage::inRandomOrder()->first();
+        $storageLocation = null;
+        
+        // Only assign a storage location 70% of the time when storage is assigned
+        if ($storage && fake()->boolean(70)) {
+            $storageLocation = StorageLocation::where('storage_id', $storage->id)
+                ->inRandomOrder()
+                ->first();
+        }
+        
         return [
             'delivery_id' => Delivery::inRandomOrder()->first()->id,
             'product_id' => $product->id,
             'order_item_id' => fake()->optional(0.7)->randomElement(OrderItem::pluck('id')->toArray()),
+            'storage_id' => $storage ? fake()->optional(0.8)->randomElement([$storage->id]) : null,
+            'storage_location_id' => $storageLocation ? $storageLocation->id : null,
             'description' => fake()->optional(0.3)->sentence(),
             'quantity' => $quantity,
             'quantity_received' => $quantityReceived,

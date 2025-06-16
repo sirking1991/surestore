@@ -60,4 +60,22 @@ class PurchaseDeliveryItem extends Model
     {
         return $this->hasMany(PurchaseInvoiceItem::class);
     }
+    
+    /**
+     * Get the storage associated with this purchase delivery item.
+     */
+    public function storage()
+    {
+        return $this->belongsTo(Storage::class);
+    }
+    
+    /**
+     * Get the storage location associated with this purchase delivery item.
+     */
+    public function storageLocation()
+    {
+        return $this->belongsTo(StorageLocation::class);
+    }
+    
+
 }

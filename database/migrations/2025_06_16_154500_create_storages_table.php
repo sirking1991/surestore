@@ -30,6 +30,32 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('storage_locations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('storage_id')->constrained()->onDelete('cascade');
+            $table->string('code')->unique();
+            $table->string('name');
+            $table->string('zone')->nullable();
+            $table->string('aisle')->nullable();
+            $table->string('rack')->nullable();
+            $table->string('shelf')->nullable();
+            $table->string('bin')->nullable();
+            $table->text('description')->nullable();
+            $table->decimal('capacity', 15, 2)->nullable();
+            $table->string('capacity_unit')->default('sqm');
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+            
+            // Create individual indexes for faster lookups
+            $table->index('storage_id');
+            $table->index('zone');
+            $table->index('aisle');
+            $table->index('rack');
+            $table->index('shelf');
+            $table->index('bin');
+        });
     }
 
     /**
@@ -37,6 +63,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('storage_locations');
         Schema::dropIfExists('storages');
     }
 };

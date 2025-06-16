@@ -5,6 +5,8 @@ namespace Database\Factories;
 use App\Models\Product;
 use App\Models\PurchaseDelivery;
 use App\Models\PurchaseOrderItem;
+use App\Models\Storage;
+use App\Models\StorageLocation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -37,10 +39,23 @@ class PurchaseDeliveryItemFactory extends Factory
                 ->first();
         }
         
+        // Get a random storage and one of its locations
+        $storage = Storage::inRandomOrder()->first();
+        $storageLocation = null;
+        
+        // Only assign a storage location 70% of the time when storage is assigned
+        if ($storage && fake()->boolean(70)) {
+            $storageLocation = StorageLocation::where('storage_id', $storage->id)
+                ->inRandomOrder()
+                ->first();
+        }
+        
         return [
             'purchase_delivery_id' => $purchaseDelivery->id,
             'product_id' => $product->id,
             'purchase_order_item_id' => $purchaseOrderItem ? $purchaseOrderItem->id : null,
+            'storage_id' => $storage ? fake()->optional(0.8)->randomElement([$storage->id]) : null,
+            'storage_location_id' => $storageLocation ? $storageLocation->id : null,
             'description' => fake()->optional(0.3)->sentence(),
             'quantity' => $quantity,
             'quantity_received' => $quantityReceived,

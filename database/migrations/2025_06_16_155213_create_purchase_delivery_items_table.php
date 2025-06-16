@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('purchase_delivery_id')->constrained('purchase_deliveries')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products');
             $table->foreignId('purchase_order_item_id')->nullable()->constrained('purchase_order_items');
+            $table->foreignId('storage_id')->nullable()->constrained('storages');
+            $table->foreignId('storage_location_id')->nullable()->constrained('storage_locations');
             $table->string('description')->nullable();
             $table->decimal('quantity', 15, 2);
             $table->decimal('quantity_received', 15, 2)->default(0);
@@ -32,6 +34,11 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->timestamps();
             $table->softDeletes();
+            
+            // Add individual indexes for faster lookups
+            $table->index('product_id');
+            $table->index('storage_id');
+            $table->index('storage_location_id');
         });
     }
 

@@ -52,4 +52,20 @@ class DeliveryItem extends Model
     {
         return $this->belongsTo(OrderItem::class);
     }
+    
+    /**
+     * Get the storage associated with this delivery item.
+     */
+    public function storage()
+    {
+        return $this->belongsTo(Storage::class);
+    }
+    
+    /**
+     * Get the storage location associated with this delivery item.
+     */
+    public function storageLocation()
+    {
+        return $this->belongsTo(StorageLocation::class);
+    }
 }
