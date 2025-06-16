@@ -67,7 +67,7 @@ SureStore uses a relational database with well-defined relationships between:
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/surestore.git
+git clone https://github.com/sirking1991/surestore.git
 cd surestore
 ```
 

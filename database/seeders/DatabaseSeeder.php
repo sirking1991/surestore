@@ -12,7 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed users first
+        // Seed admin users
+        \App\Models\User::factory()->create([
+            'first_name' => 'Admin',
+            'last_name' => 'User',
+            'email' => 'admin@demo.com',
+            'password' => 'password',
+        ]);
         \App\Models\User::factory(10)->create();
         
         // Then seed customers and products
