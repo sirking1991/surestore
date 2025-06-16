@@ -1,9 +1,9 @@
 # SureStore
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://github.com/sirking1991/surestore/actions"><img src="https://github.com/sirking1991/surestore/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/sirking1991/surestore"><img src="https://img.shields.io/packagist/v/sirking1991/surestore" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/sirking1991/surestore"><img src="https://img.shields.io/packagist/l/sirking1991/surestore" alt="License"></a>
 </p>
 
 ## About SureStore
