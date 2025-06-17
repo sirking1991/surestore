@@ -10,13 +10,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
+use Spatie\Permission\Traits\HasRoles;
 
 class User 
     extends Authenticatable 
     implements FilamentUser, HasAvatar, HasName
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +57,8 @@ class User
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        // Only allow users with specific roles to access the admin panel
+        return $this->hasRole(['admin', 'manager', 'staff']);
     }
 
     public function getFilamentAvatarUrl(): ?string
