@@ -11,11 +11,26 @@ class QuoteItem extends Model
     use HasFactory, SoftDeletes;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'quote_id',
+        'product_id',
+        'description',
+        'quantity',
+        'unit',
+        'unit_price',
+        'tax_rate',
+        'tax_amount',
+        'discount_rate',
+        'discount_amount',
+        'subtotal',
+        'total',
+        'sort_order',
+        'notes',
+    ];
 
     /**
      * The attributes that should be cast.
