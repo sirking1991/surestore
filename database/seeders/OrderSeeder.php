@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +15,35 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create orders
-        Order::factory()->count(20)->create()->each(function ($order) {
+        // Create 100+ orders spread across a year
+        $startDate = Carbon::now()->subYear();
+        $endDate = Carbon::now();
+        
+        // Create at least 100 orders
+        $orderCount = 120; // A bit more than 100 to ensure we have enough
+        
+        // Calculate the average time interval between orders
+        $totalDays = $endDate->diffInDays($startDate);
+        $daysPerOrder = $totalDays / $orderCount;
+        
+        for ($i = 0; $i < $orderCount; $i++) {
+            // Calculate the order date with some randomness
+            $orderDate = $startDate->copy()->addDays(ceil($i * $daysPerOrder))
+                ->addDays(rand(-3, 3)) // Add some randomness (+/- 3 days)
+                ->setTime(rand(8, 17), rand(0, 59), rand(0, 59)); // Random time between 8 AM and 6 PM
+            
+            // Ensure the date is not in the future
+            if ($orderDate->gt($endDate)) {
+                $orderDate = $endDate->copy()->subDays(rand(0, 7));
+            }
+            
+            // Create the order with the specific date
+            $order = Order::factory()->create([
+                'order_date' => $orderDate,
+                'created_at' => $orderDate,
+                'updated_at' => $orderDate,
+            ]);
+            
             // For each order, create 1-6 order items
             $itemCount = rand(1, 6);
             
@@ -38,6 +66,6 @@ class OrderSeeder extends Seeder
                 'discount' => $discount,
                 'total' => $total
             ]);
-        });
+        }
     }
 }

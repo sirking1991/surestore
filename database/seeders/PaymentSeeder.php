@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Payment;
 use App\Models\PaymentItem;
 use App\Models\Invoice;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,13 +19,43 @@ class PaymentSeeder extends Seeder
         // Get the current count of payments to ensure unique payment numbers
         $paymentCount = Payment::count();
         
-        // Create payments with unique payment numbers
-        Payment::factory()->count(5)->make()->each(function ($payment) use (&$paymentCount) {
+        // Create 100+ payments spread across a year
+        $startDate = Carbon::now()->subYear();
+        $endDate = Carbon::now();
+        
+        // Create at least 100 payments
+        $paymentTotal = 120; // A bit more than 100 to ensure we have enough
+        
+        // Calculate the average time interval between payments
+        $totalDays = $endDate->diffInDays($startDate);
+        $daysPerPayment = $totalDays / $paymentTotal;
+        
+        for ($i = 0; $i < $paymentTotal; $i++) {
+            // Calculate the payment date with some randomness
+            $paymentDate = $startDate->copy()->addDays(ceil($i * $daysPerPayment))
+                ->addDays(rand(-3, 3)) // Add some randomness (+/- 3 days)
+                ->setTime(rand(8, 17), rand(0, 59), rand(0, 59)); // Random time between 8 AM and 6 PM
+            
+            // Ensure the date is not in the future
+            if ($paymentDate->gt($endDate)) {
+                $paymentDate = $endDate->copy()->subDays(rand(0, 7));
+            }
+            
             // Generate a unique payment number
             $paymentCount++;
-            $date = now()->format('Ymd');
-            $payment->payment_number = 'PAY-' . $date . '-' . str_pad($paymentCount, 4, '0', STR_PAD_LEFT);
+            $date = $paymentDate->format('Ymd');
+            $paymentNumber = 'PAY-' . $date . '-' . str_pad($paymentCount, 4, '0', STR_PAD_LEFT);
+            
+            // Create the payment with the specific date
+            $payment = Payment::factory()->make([
+                'payment_date' => $paymentDate,
+                'payment_number' => $paymentNumber,
+                'created_at' => $paymentDate,
+                'updated_at' => $paymentDate,
+            ]);
+            
             $payment->save();
+            
             // For each payment, create 1-3 payment items
             $itemCount = rand(1, 3);
             
@@ -64,6 +95,6 @@ class PaymentSeeder extends Seeder
                     ]);
                 }
             }
-        });
+        }
     }
 }

@@ -29,7 +29,8 @@ class OrderFactory extends Factory
         $discount = $subtotal * $discountRate;
         $total = $subtotal + $tax - $discount + $shipping;
         
-        $orderDate = fake()->dateTimeBetween('-2 months', 'now');
+        // Default to recent dates if not specified
+        $orderDate = $this->faker->dateTimeBetween('-2 months', 'now');
         
         return [
             'order_number' => 'ORD' . date('Y') . str_pad($orderNumber++, 5, '0', STR_PAD_LEFT),

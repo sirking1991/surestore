@@ -31,7 +31,8 @@ class InvoiceFactory extends Factory
         $amountPaid = fake()->randomFloat(2, 0, $total);
         $amountDue = $total - $amountPaid;
         
-        $invoiceDate = fake()->dateTimeBetween('-2 months', 'now');
+        // Default to recent dates if not specified
+        $invoiceDate = $this->faker->dateTimeBetween('-2 months', 'now');
         
         return [
             'invoice_number' => 'INV' . date('Y') . str_pad($invoiceNumber++, 5, '0', STR_PAD_LEFT),
