@@ -37,10 +37,12 @@ class Disbursement extends Model
     }
     
     /**
-     * Get the purchase invoice associated with the disbursement.
+     * Get the purchase invoices associated with the disbursement.
      */
-    public function purchaseInvoice()
+    public function purchaseInvoices()
     {
-        return $this->belongsTo(PurchaseInvoice::class);
+        return $this->belongsToMany(PurchaseInvoice::class, 'disbursement_purchase_invoice')
+            ->withPivot('amount', 'notes')
+            ->withTimestamps();
     }
 }

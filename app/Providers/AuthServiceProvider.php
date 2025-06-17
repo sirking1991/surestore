@@ -3,16 +3,24 @@
 namespace App\Providers;
 
 use App\Models\Customer;
+use App\Models\Disbursement;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\PurchaseDelivery;
+use App\Models\PurchaseInvoice;
+use App\Models\PurchaseOrder;
 use App\Models\Storage;
 use App\Models\StorageLocation;
 use App\Models\Supplier;
 use App\Models\User;
 use App\Policies\CustomerPolicy;
+use App\Policies\DisbursementPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProductPolicy;
+use App\Policies\PurchaseDeliveryPolicy;
+use App\Policies\PurchaseInvoicePolicy;
+use App\Policies\PurchaseOrderPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\StorageLocationPolicy;
 use App\Policies\StoragePolicy;
@@ -40,6 +48,10 @@ class AuthServiceProvider extends ServiceProvider
         StorageLocation::class => StorageLocationPolicy::class,
         Product::class => ProductPolicy::class,
         Payment::class => PaymentPolicy::class,
+        PurchaseOrder::class => PurchaseOrderPolicy::class,
+        PurchaseDelivery::class => PurchaseDeliveryPolicy::class,
+        PurchaseInvoice::class => PurchaseInvoicePolicy::class,
+        Disbursement::class => DisbursementPolicy::class,
     ];
 
     /**

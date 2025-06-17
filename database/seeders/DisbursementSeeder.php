@@ -51,9 +51,14 @@ class DisbursementSeeder extends Seeder
             // Create disbursement
             $disbursement = Disbursement::factory()->create([
                 'supplier_id' => $invoice->supplier_id,
-                'purchase_invoice_id' => $invoice->id,
                 'amount' => $amount,
                 'status' => 'completed',
+            ]);
+            
+            // Attach the invoice to the disbursement with pivot data
+            $disbursement->purchaseInvoices()->attach($invoice->id, [
+                'amount' => $amount,
+                'notes' => fake()->boolean(30) ? fake()->sentence() : null,
             ]);
             
             // Update invoice payment amounts
@@ -90,9 +95,7 @@ class DisbursementSeeder extends Seeder
         
         Disbursement::factory()
             ->count($disbursementCount)
-            ->create([
-                'purchase_invoice_id' => null,
-            ]);
+            ->create();
     }
     
     /**

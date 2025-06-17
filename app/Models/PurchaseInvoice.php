@@ -73,6 +73,8 @@ class PurchaseInvoice extends Model
      */
     public function disbursements()
     {
-        return $this->hasMany(Disbursement::class);
+        return $this->belongsToMany(Disbursement::class, 'disbursement_purchase_invoice')
+            ->withPivot('amount', 'notes')
+            ->withTimestamps();
     }
 }

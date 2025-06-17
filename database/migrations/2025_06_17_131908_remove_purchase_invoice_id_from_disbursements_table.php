@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('inventory_adjustments', function (Blueprint $table) {
-            if (!Schema::hasColumn('inventory_adjustments', 'deleted_at')) {
-                $table->softDeletes();
-            }
+        Schema::table('disbursements', function (Blueprint $table) {
+            $table->dropForeign(['purchase_invoice_id']);
+            $table->dropColumn('purchase_invoice_id');
         });
     }
 
@@ -23,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inventory_adjustments', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('disbursements', function (Blueprint $table) {
+            $table->foreignId('purchase_invoice_id')->nullable()->constrained('purchase_invoices');
         });
     }
 };
