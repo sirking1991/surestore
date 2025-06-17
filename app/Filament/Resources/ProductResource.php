@@ -93,15 +93,15 @@ class ProductResource extends Resource
                 Forms\Components\Section::make('Pricing')
                     ->schema([
                         Forms\Components\TextInput::make('purchase_price')
-                            ->label('Purchase Price (Rp)')
+                            ->label('Purchase Price')
                             ->numeric()
                             ->step(0.01)
-                            ->prefix('Rp'),
+,
                         Forms\Components\TextInput::make('selling_price')
-                            ->label('Selling Price (Rp)')
+                            ->label('Selling Price')
                             ->numeric()
                             ->step(0.01)
-                            ->prefix('Rp'),
+,
                     ])
                     ->columns(2),
 
@@ -164,10 +164,10 @@ class ProductResource extends Resource
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('purchase_price')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('selling_price')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric(0)

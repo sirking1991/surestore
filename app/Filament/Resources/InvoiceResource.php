@@ -69,32 +69,32 @@ class InvoiceResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('subtotal')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('tax')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('discount')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('total')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('amount_paid')
                             ->numeric()
-                            ->prefix('$')
+
                             ->required()
                             ->default(0),
                         Forms\Components\TextInput::make('amount_due')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                     ])
@@ -141,13 +141,13 @@ class InvoiceResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount_paid')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount_due')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

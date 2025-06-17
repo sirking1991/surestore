@@ -36,7 +36,7 @@ class ItemsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('unit_price')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->minValue(0),
                 Forms\Components\Select::make('status')
                     ->options([
@@ -67,7 +67,7 @@ class ItemsRelationManager extends RelationManager
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('unit_price')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

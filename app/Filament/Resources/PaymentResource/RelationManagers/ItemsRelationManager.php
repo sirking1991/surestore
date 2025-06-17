@@ -47,7 +47,7 @@ class ItemsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->minValue(0)
                     ->step(0.01),
                 Forms\Components\Textarea::make('notes')
@@ -68,7 +68,7 @@ class ItemsRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('notes')
                     ->searchable()

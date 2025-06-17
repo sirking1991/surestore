@@ -126,10 +126,10 @@ class CustomerResource extends Resource
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('credit_limit')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('balance')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean()

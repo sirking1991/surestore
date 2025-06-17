@@ -66,24 +66,24 @@ class PurchaseOrderResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('subtotal')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('tax_amount')
                             ->label('Tax')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('discount_amount')
                             ->label('Discount')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('total')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                     ])
@@ -141,7 +141,7 @@ class PurchaseOrderResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

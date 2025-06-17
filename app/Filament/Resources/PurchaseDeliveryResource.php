@@ -73,10 +73,10 @@ class PurchaseDeliveryResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('shipping_cost')
                             ->numeric()
-                            ->prefix('$'),
+,
                         Forms\Components\TextInput::make('other_charges')
                             ->numeric()
-                            ->prefix('$'),
+,
                     ])
                     ->columns(2),
                     

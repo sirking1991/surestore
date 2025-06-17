@@ -30,38 +30,38 @@ class InvoicesRelationManager extends RelationManager
                     ->required(),
                 Forms\Components\TextInput::make('subtotal')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('tax_amount')
                     ->label('Tax')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('discount_amount')
                     ->label('Discount')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('shipping_cost')
                     ->numeric()
-                    ->prefix('$'),
+,
                 Forms\Components\TextInput::make('other_charges')
                     ->numeric()
-                    ->prefix('$'),
+,
                 Forms\Components\TextInput::make('total')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('amount_paid')
                     ->numeric()
-                    ->prefix('$'),
+,
                 Forms\Components\TextInput::make('amount_due')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\Select::make('payment_status')
@@ -102,13 +102,13 @@ class InvoicesRelationManager extends RelationManager
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount_paid')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount_due')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('payment_status')
                     ->colors([

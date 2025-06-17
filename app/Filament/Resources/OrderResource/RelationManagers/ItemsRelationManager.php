@@ -148,7 +148,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('unit')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('unit_price')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tax_rate')
                     ->numeric()
@@ -159,10 +159,10 @@ class ItemsRelationManager extends RelationManager
                     ->suffix('%')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('subtotal')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
             ])
             ->filters([

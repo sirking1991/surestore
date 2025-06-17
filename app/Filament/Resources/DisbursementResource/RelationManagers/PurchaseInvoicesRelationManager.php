@@ -21,7 +21,7 @@ class PurchaseInvoicesRelationManager extends RelationManager
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->minValue(0),
                 Forms\Components\Textarea::make('notes')
                     ->maxLength(65535),
@@ -68,7 +68,7 @@ class PurchaseInvoicesRelationManager extends RelationManager
                         Forms\Components\TextInput::make('amount')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+        
                             ->minValue(0),
                         Forms\Components\Textarea::make('notes')
                             ->maxLength(65535),
@@ -80,7 +80,7 @@ class PurchaseInvoicesRelationManager extends RelationManager
                         Forms\Components\TextInput::make('amount')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+        
                             ->minValue(0),
                         Forms\Components\Textarea::make('notes')
                             ->maxLength(65535),

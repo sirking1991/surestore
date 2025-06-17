@@ -68,22 +68,22 @@ class OrderResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('subtotal')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('tax')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('discount')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                         Forms\Components\TextInput::make('total')
                             ->numeric()
-                            ->prefix('$')
+
                             ->disabled()
                             ->dehydrated(),
                     ])
@@ -130,7 +130,7 @@ class OrderResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

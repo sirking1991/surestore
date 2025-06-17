@@ -223,7 +223,7 @@ class QuoteResource extends Resource
                         $record->valid_until < now() ? 'danger' : 'success'
                     ),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

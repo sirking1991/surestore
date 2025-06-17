@@ -118,7 +118,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('unit')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('unit_price')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tax_rate')
                     ->numeric(2)
@@ -129,10 +129,10 @@ class ItemsRelationManager extends RelationManager
                     ->suffix('%')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('subtotal')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

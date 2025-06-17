@@ -46,7 +46,7 @@ class MaterialsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('unit_cost')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->minValue(0)
                     ->step(0.01)
                     ->reactive()
@@ -58,7 +58,7 @@ class MaterialsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('total_cost')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled(),
                 Forms\Components\Select::make('storage_id')
                     ->relationship('storage', 'name')
@@ -82,10 +82,10 @@ class MaterialsRelationManager extends RelationManager
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('unit_cost')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_cost')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('storage.name')
                     ->label('Storage')

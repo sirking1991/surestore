@@ -79,11 +79,11 @@ class ProductionResource extends Resource
                             ->minValue(0),
                         Forms\Components\TextInput::make('labor_cost')
                             ->numeric()
-                            ->prefix('$')
+
                             ->minValue(0),
                         Forms\Components\TextInput::make('total_cost')
                             ->numeric()
-                            ->prefix('$')
+
                             ->minValue(0)
                             ->required(),
                     ])
@@ -120,7 +120,7 @@ class ProductionResource extends Resource
                         'danger' => 'cancelled',
                     ]),
                 Tables\Columns\TextColumn::make('total_cost')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time')
                     ->dateTime()
@@ -139,7 +139,7 @@ class ProductionResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('labor_cost')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('user.first_name')

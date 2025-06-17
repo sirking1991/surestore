@@ -61,19 +61,19 @@ class StatsOverview extends BaseWidget
             : 0;
 
         return [
-            Stat::make('Today\'s Sales', '$' . number_format($todaySales, 2))
+            Stat::make('Today\'s Sales', number_format($todaySales, 2))
                 ->description('Total sales today')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->chart([7, 2, 10, 3, 15, 4, 17])
                 ->color('primary'),
 
-            Stat::make('Monthly Sales', '$' . number_format($monthSales, 2))
+            Stat::make('Monthly Sales', number_format($monthSales, 2))
                 ->description('Total sales this month')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->chart([15, 30, 20, 45, 35, 40, 50])
                 ->color('primary'),
 
-            Stat::make('Year to Date', '$' . number_format($yearSales, 2))
+            Stat::make('Year to Date', number_format($yearSales, 2))
                 ->description('Total sales this year')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->chart([30, 60, 40, 50, 80, 70, 90])
@@ -84,7 +84,7 @@ class StatsOverview extends BaseWidget
                 ->descriptionIcon('heroicon-m-shopping-bag')
                 ->color('info'),
 
-            Stat::make('Average Order Value', '$' . number_format($averageOrderValue, 2))
+            Stat::make('Average Order Value', number_format($averageOrderValue, 2))
                 ->description('This month')
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->color('success'),

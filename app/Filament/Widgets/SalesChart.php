@@ -77,7 +77,7 @@ class SalesChart extends ChartWidget
                 ],
                 'tooltip' => [
                     'callbacks' => [
-                        'label' => 'function(context) { return "$" + context.parsed.y.toFixed(2); }',
+                        'label' => 'function(context) { return context.parsed.y.toFixed(2); }',
                     ],
                 ],
             ],
@@ -85,7 +85,7 @@ class SalesChart extends ChartWidget
                 'y' => [
                     'beginAtZero' => true,
                     'ticks' => [
-                        'callback' => 'function(value) { return "$" + value; }',
+                        'callback' => 'function(value) { return value; }',
                     ],
                 ],
             ],

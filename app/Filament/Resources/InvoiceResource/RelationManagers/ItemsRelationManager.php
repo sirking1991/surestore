@@ -47,7 +47,7 @@ class ItemsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('unit_price')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->minValue(0)
                     ->step(0.01)
                     ->reactive()
@@ -62,7 +62,7 @@ class ItemsRelationManager extends RelationManager
                     ->afterStateUpdated(fn ($state, callable $set, $get) => $this->calculateTotals($state, $set, $get)),
                 Forms\Components\TextInput::make('tax_amount')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('discount_rate')
@@ -75,17 +75,17 @@ class ItemsRelationManager extends RelationManager
                     ->afterStateUpdated(fn ($state, callable $set, $get) => $this->calculateTotals($state, $set, $get)),
                 Forms\Components\TextInput::make('discount_amount')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('subtotal')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
                 Forms\Components\TextInput::make('total')
                     ->numeric()
-                    ->prefix('$')
+
                     ->disabled()
                     ->dehydrated(),
             ]);
@@ -105,7 +105,7 @@ class ItemsRelationManager extends RelationManager
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('unit_price')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tax_rate')
                     ->numeric()
@@ -116,10 +116,10 @@ class ItemsRelationManager extends RelationManager
                     ->suffix('%')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subtotal')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
             ])
             ->filters([

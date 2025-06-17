@@ -30,7 +30,7 @@ class DisbursementsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric()
-                    ->prefix('$')
+
                     ->minValue(0),
                 Forms\Components\Select::make('payment_method')
                     ->options([
@@ -75,10 +75,10 @@ class DisbursementsRelationManager extends RelationManager
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('pivot.amount')
-                    ->money('USD')
+                    ->numeric()
                     ->label('Applied Amount')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('payment_method')
@@ -100,7 +100,7 @@ class DisbursementsRelationManager extends RelationManager
                         Forms\Components\TextInput::make('amount')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+        
                             ->minValue(0),
                         Forms\Components\Textarea::make('notes')
                             ->maxLength(65535),
@@ -112,7 +112,7 @@ class DisbursementsRelationManager extends RelationManager
                         Forms\Components\TextInput::make('amount')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+        
                             ->minValue(0),
                         Forms\Components\Textarea::make('notes')
                             ->maxLength(65535),

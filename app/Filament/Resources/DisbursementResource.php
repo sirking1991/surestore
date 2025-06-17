@@ -65,7 +65,7 @@ class DisbursementResource extends Resource
                         Forms\Components\TextInput::make('amount')
                             ->required()
                             ->numeric()
-                            ->prefix('$')
+
                             ->minValue(0),
                         Forms\Components\Select::make('payment_method')
                             ->options([
@@ -123,7 +123,7 @@ class DisbursementResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->searchable(),

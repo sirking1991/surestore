@@ -56,7 +56,7 @@ class ItemsRelationManager extends RelationManager
                     ->numeric(2)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('unit_cost')
-                    ->money('IDR')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('unit'),
                 Tables\Columns\TextColumn::make('created_at')

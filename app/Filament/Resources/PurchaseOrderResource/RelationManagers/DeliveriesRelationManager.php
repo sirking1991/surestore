@@ -33,10 +33,10 @@ class DeliveriesRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\TextInput::make('shipping_cost')
                     ->numeric()
-                    ->prefix('$'),
+,
                 Forms\Components\TextInput::make('other_charges')
                     ->numeric()
-                    ->prefix('$'),
+,
                 Forms\Components\Select::make('status')
                     ->options([
                         'pending' => 'Pending',

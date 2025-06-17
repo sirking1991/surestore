@@ -66,7 +66,6 @@ class PaymentResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('amount')
                             ->numeric()
-                            ->prefix('$')
                             ->required(),
                         Forms\Components\Select::make('payment_method')
                             ->options([
@@ -117,7 +116,7 @@ class PaymentResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->money('USD')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->searchable()
