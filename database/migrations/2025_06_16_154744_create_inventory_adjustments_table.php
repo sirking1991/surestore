@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('inventory_adjustments', function (Blueprint $table) {
             $table->id();
+            $table->string('reference_number')->unique();
+            $table->date('adjustment_date');
+            $table->foreignId('storage_location_id')->constrained('storage_locations');
+            $table->string('adjustment_type')->comment('addition, subtraction, transfer');
+            $table->text('notes')->nullable();
+            $table->string('status')->default('draft')->comment('draft, approved, cancelled');
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('approved_by')->nullable()->constrained('users');
+            $table->timestamp('approved_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

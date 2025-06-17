@@ -19,7 +19,7 @@ class StorageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Master Files';
     
     protected static ?int $navigationSort = 3;
 

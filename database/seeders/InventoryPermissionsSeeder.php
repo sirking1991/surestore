@@ -66,13 +66,25 @@ class InventoryPermissionsSeeder extends Seeder
             'force delete products',
         ];
         
+        // Create permissions for InventoryAdjustment entity
+        $inventoryAdjustmentPermissions = [
+            'view inventory adjustments',
+            'create inventory adjustments',
+            'edit inventory adjustments',
+            'delete inventory adjustments',
+            'restore inventory adjustments',
+            'force delete inventory adjustments',
+            'approve inventory adjustments',
+        ];
+        
         // Combine all permissions
         $allPermissions = array_merge(
             $customerPermissions,
             $supplierPermissions,
             $storagePermissions,
             $locationPermissions,
-            $productPermissions
+            $productPermissions,
+            $inventoryAdjustmentPermissions
         );
         
         // Create permissions in database

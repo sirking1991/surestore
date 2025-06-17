@@ -19,7 +19,7 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';  // Truck icon for suppliers
 
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Master Files';
     
     protected static ?int $navigationSort = 2;
 
