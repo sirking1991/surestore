@@ -15,8 +15,16 @@ class PaymentSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create payments
-        Payment::factory()->count(25)->create()->each(function ($payment) {
+        // Get the current count of payments to ensure unique payment numbers
+        $paymentCount = Payment::count();
+        
+        // Create payments with unique payment numbers
+        Payment::factory()->count(5)->make()->each(function ($payment) use (&$paymentCount) {
+            // Generate a unique payment number
+            $paymentCount++;
+            $date = now()->format('Ymd');
+            $payment->payment_number = 'PAY-' . $date . '-' . str_pad($paymentCount, 4, '0', STR_PAD_LEFT);
+            $payment->save();
             // For each payment, create 1-3 payment items
             $itemCount = rand(1, 3);
             

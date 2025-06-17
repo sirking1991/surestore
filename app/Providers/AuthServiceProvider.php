@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Customer;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Storage;
 use App\Models\StorageLocation;
 use App\Models\Supplier;
 use App\Models\User;
 use App\Policies\CustomerPolicy;
+use App\Policies\PaymentPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\RolePolicy;
@@ -37,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         Storage::class => StoragePolicy::class,
         StorageLocation::class => StorageLocationPolicy::class,
         Product::class => ProductPolicy::class,
+        Payment::class => PaymentPolicy::class,
     ];
 
     /**
