@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductionResource\RelationManagers;
 
+use App\Filament\Resources\WorkOrderResource;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -106,7 +107,10 @@ class WorkOrdersRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->url(fn ($record) => WorkOrderResource::getUrl('view', ['record' => $record])),
+                Tables\Actions\EditAction::make()
+                    ->url(fn ($record) => WorkOrderResource::getUrl('edit', ['record' => $record])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
