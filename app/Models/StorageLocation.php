@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StorageLocation extends Model
@@ -38,7 +39,10 @@ class StorageLocation extends Model
     /**
      * Get the products stored at this location.
      */
-    public function products()
+    /**
+     * Get the products for the storage location.
+     */
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }

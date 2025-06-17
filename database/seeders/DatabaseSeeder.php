@@ -15,15 +15,15 @@ class DatabaseSeeder extends Seeder
         // Seed roles and permissions first
         $this->call([
             RolesAndPermissionsSeeder::class,
+            InventoryPermissionsSeeder::class,
         ]);
         
         // Create additional users
         \App\Models\User::factory(10)->create();
         
-        // Then seed customers and products
+        // Then seed master data
         $this->call([
-            CustomerSeeder::class,
-            ProductSeeder::class,
+            MasterDataSeeder::class,
         ]);
         
         // Seed transactions in logical order
