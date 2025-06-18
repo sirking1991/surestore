@@ -24,11 +24,29 @@ class FilamentNavigationServiceProvider extends ServiceProvider
         Filament::serving(function () {
             Filament::registerNavigationGroups([
                 NavigationGroup::make()
-                    ->label('Transactions'),
+                    ->label('Inventories')
+                    ->icon('heroicon-o-archive-box'),
                 NavigationGroup::make()
-                    ->label('Master Files'),
+                    ->label('Analytics')
+                    ->icon('heroicon-o-chart-bar'),
                 NavigationGroup::make()
-                    ->label('Administration'),
+                    ->label('Reports')
+                    ->icon('heroicon-o-document-chart-bar'),
+                NavigationGroup::make()
+                    ->label('Manufacturing')
+                    ->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make()
+                    ->label('Purchases')
+                    ->icon('heroicon-o-shopping-cart'),
+                NavigationGroup::make()
+                    ->label('Sales')
+                    ->icon('heroicon-o-currency-dollar'),
+                NavigationGroup::make()
+                    ->label('Master Files')
+                    ->icon('heroicon-o-folder'),
+                NavigationGroup::make()
+                    ->label('Administration')
+                    ->icon('heroicon-o-user-group'),
             ]);
         });
     }
