@@ -23,15 +23,19 @@ class PurchaseDeliverySeeder extends Seeder
             return;
         }
         
-        // Create some deliveries linked to purchase orders
-        $linkedDeliveryCount = 10;
+        // Create deliveries linked to purchase orders spread across 2 years
+        $linkedDeliveryCount = 100; // Increased from 10 to at least 100
         $this->command->info("Creating {$linkedDeliveryCount} deliveries linked to purchase orders...");
         
         $purchaseOrders = PurchaseOrder::inRandomOrder()->limit($linkedDeliveryCount)->get();
         
         foreach ($purchaseOrders as $purchaseOrder) {
-            // Create a delivery for this purchase order
+            // Create a delivery for this purchase order with dates from the past 2 years
+            $deliveryDate = \Carbon\Carbon::now()->subYears(2)->addDays(rand(0, 730));
             $delivery = PurchaseDelivery::factory()->create([
+                'delivery_date' => $deliveryDate,
+                'created_at' => $deliveryDate,
+                'updated_at' => $deliveryDate,
                 'supplier_id' => $purchaseOrder->supplier_id,
                 'purchase_order_id' => $purchaseOrder->id,
             ]);

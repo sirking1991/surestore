@@ -80,6 +80,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'edit content',
         ]);
 
+        // Salesperson role
+        $salespersonRole = Role::create(['name' => 'salesperson']);
+        $salespersonRole->givePermissionTo([
+            'view content',
+            'create content',
+            'edit content',
+        ]);
+
         // Create admin user
         $admin = User::create([
             'first_name' => 'Admin',
@@ -106,5 +114,22 @@ class RolesAndPermissionsSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
         $staff->assignRole('staff');
+
+        // Create salesperson users
+        $salesperson1 = User::create([
+            'first_name' => 'John',
+            'last_name' => 'Sales',
+            'email' => 'john.sales@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $salesperson1->assignRole('salesperson');
+
+        $salesperson2 = User::create([
+            'first_name' => 'Jane',
+            'last_name' => 'Seller',
+            'email' => 'jane.seller@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $salesperson2->assignRole('salesperson');
     }
 }

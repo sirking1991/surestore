@@ -42,7 +42,7 @@ class PurchaseInvoiceSeeder extends Seeder
     {
         $deliveries = PurchaseDelivery::whereNotNull('purchase_order_id')
             ->inRandomOrder()
-            ->limit(8)
+            ->limit(40) // Increased from 8 to generate more records
             ->get();
             
         $this->command->info("Creating invoices for " . count($deliveries) . " deliveries...");
@@ -50,8 +50,12 @@ class PurchaseInvoiceSeeder extends Seeder
         foreach ($deliveries as $delivery) {
             $purchaseOrder = $delivery->purchaseOrder;
             
-            // Create an invoice for this delivery
+            // Create an invoice for this delivery with dates from the past 2 years
+            $invoiceDate = \Carbon\Carbon::now()->subYears(2)->addDays(rand(0, 730));
             $invoice = PurchaseInvoice::factory()->create([
+                'invoice_date' => $invoiceDate,
+                'created_at' => $invoiceDate,
+                'updated_at' => $invoiceDate,
                 'supplier_id' => $delivery->supplier_id,
                 'purchase_order_id' => $delivery->purchase_order_id,
                 'purchase_delivery_id' => $delivery->id,
@@ -95,14 +99,18 @@ class PurchaseInvoiceSeeder extends Seeder
         // Find purchase orders without invoices
         $purchaseOrders = PurchaseOrder::whereDoesntHave('invoices')
             ->inRandomOrder()
-            ->limit(5)
+            ->limit(40) // Increased from 5 to generate more records
             ->get();
             
         $this->command->info("Creating invoices for " . count($purchaseOrders) . " purchase orders without deliveries...");
         
         foreach ($purchaseOrders as $purchaseOrder) {
-            // Create an invoice for this purchase order
+            // Create an invoice for this purchase order with dates from the past 2 years
+            $invoiceDate = \Carbon\Carbon::now()->subYears(2)->addDays(rand(0, 730));
             $invoice = PurchaseInvoice::factory()->create([
+                'invoice_date' => $invoiceDate,
+                'created_at' => $invoiceDate,
+                'updated_at' => $invoiceDate,
                 'supplier_id' => $purchaseOrder->supplier_id,
                 'purchase_order_id' => $purchaseOrder->id,
                 'purchase_delivery_id' => null,
@@ -143,15 +151,38 @@ class PurchaseInvoiceSeeder extends Seeder
      */
     private function createStandaloneInvoices(): void
     {
-        $invoiceCount = 3;
+        $invoiceCount = 40; // Increased from 3 to generate more records
         $this->command->info("Creating {$invoiceCount} standalone invoices...");
         
-        $invoices = PurchaseInvoice::factory()
-            ->count($invoiceCount)
-            ->create([
+        // Create invoices with dates spread over 2 years
+        $startDate = \Carbon\Carbon::now()->subYears(2);
+        $endDate = \Carbon\Carbon::now();
+        $totalDays = $endDate->diffInDays($startDate);
+        $daysPerInvoice = $totalDays / $invoiceCount;
+        
+        $invoices = [];
+        
+        for ($i = 0; $i < $invoiceCount; $i++) {
+            // Calculate invoice date with some randomness
+            $invoiceDate = $startDate->copy()->addDays(ceil($i * $daysPerInvoice))
+                ->addDays(rand(-3, 3))
+                ->setTime(rand(8, 17), rand(0, 59), rand(0, 59));
+                
+            // Ensure date is not in the future
+            if ($invoiceDate->gt($endDate)) {
+                $invoiceDate = $endDate->copy()->subDays(rand(0, 7));
+            }
+            
+            $invoice = PurchaseInvoice::factory()->create([
                 'purchase_order_id' => null,
                 'purchase_delivery_id' => null,
+                'invoice_date' => $invoiceDate,
+                'created_at' => $invoiceDate,
+                'updated_at' => $invoiceDate,
             ]);
+            
+            $invoices[] = $invoice;
+        }
             
         foreach ($invoices as $invoice) {
             // Create between 2-5 items for each invoice

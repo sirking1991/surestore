@@ -59,6 +59,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->spa()
-            ->authGuard('web');
+            ->authGuard('web')
+            ->collapsibleNavigationGroups()
+            ->sidebarCollapsibleOnDesktop();
     }
 }

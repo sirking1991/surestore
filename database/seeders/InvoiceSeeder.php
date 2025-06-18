@@ -15,8 +15,8 @@ class InvoiceSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 100+ invoices spread across a year
-        $startDate = Carbon::now()->subYear();
+        // Create 100+ invoices spread across 2 years
+        $startDate = Carbon::now()->subYears(2);
         $endDate = Carbon::now();
         
         // Create at least 100 invoices

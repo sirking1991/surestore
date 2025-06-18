@@ -34,4 +34,12 @@ class Product extends Model
     {
         return $this->belongsTo(StorageLocation::class);
     }
+    
+    /**
+     * Get the category that owns the product.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
 }

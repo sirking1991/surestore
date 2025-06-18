@@ -40,6 +40,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SupplierSeeder::class,
             StorageSeeder::class,
+            ProductCategorySeeder::class,
+            CustomerRegionSeeder::class,
         ]);
         
         // Run purchase-related seeders in logical order

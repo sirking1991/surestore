@@ -15,8 +15,8 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 100+ orders spread across a year
-        $startDate = Carbon::now()->subYear();
+        // Create 100+ orders spread across 2 years
+        $startDate = Carbon::now()->subYears(2);
         $endDate = Carbon::now();
         
         // Create at least 100 orders

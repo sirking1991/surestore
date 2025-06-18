@@ -21,13 +21,40 @@ class PurchaseOrderSeeder extends Seeder
             return;
         }
         
-        // Create purchase orders
-        $purchaseOrderCount = 15;
+        // Create purchase orders spread across 2 years
+        $startDate = \Carbon\Carbon::now()->subYears(2);
+        $endDate = \Carbon\Carbon::now();
+        
+        // Create at least 100 purchase orders
+        $purchaseOrderCount = 120; // A bit more than 100 to ensure we have enough
         $this->command->info("Creating {$purchaseOrderCount} purchase orders...");
         
-        $purchaseOrders = PurchaseOrder::factory()
-            ->count($purchaseOrderCount)
-            ->create();
+        // Calculate the average time interval between purchase orders
+        $totalDays = $endDate->diffInDays($startDate);
+        $daysPerPO = $totalDays / $purchaseOrderCount;
+        
+        $purchaseOrders = [];
+        
+        for ($i = 0; $i < $purchaseOrderCount; $i++) {
+            // Calculate the purchase order date with some randomness
+            $poDate = $startDate->copy()->addDays(ceil($i * $daysPerPO))
+                ->addDays(rand(-3, 3)) // Add some randomness (+/- 3 days)
+                ->setTime(rand(8, 17), rand(0, 59), rand(0, 59)); // Random time between 8 AM and 6 PM
+            
+            // Ensure the date is not in the future
+            if ($poDate->gt($endDate)) {
+                $poDate = $endDate->copy()->subDays(rand(0, 7));
+            }
+            
+            // Create the purchase order with the specific date
+            $purchaseOrder = PurchaseOrder::factory()->create([
+                'order_date' => $poDate,
+                'created_at' => $poDate,
+                'updated_at' => $poDate,
+            ]);
+            
+            $purchaseOrders[] = $purchaseOrder;
+        }
             
         $this->command->info('Creating purchase order items...');
         

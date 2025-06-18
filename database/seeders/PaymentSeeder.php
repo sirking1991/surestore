@@ -19,8 +19,8 @@ class PaymentSeeder extends Seeder
         // Get the current count of payments to ensure unique payment numbers
         $paymentCount = Payment::count();
         
-        // Create 100+ payments spread across a year
-        $startDate = Carbon::now()->subYear();
+        // Create 100+ payments spread across 2 years
+        $startDate = Carbon::now()->subYears(2);
         $endDate = Carbon::now();
         
         // Create at least 100 payments
