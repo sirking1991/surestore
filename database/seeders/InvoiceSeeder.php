@@ -15,6 +15,9 @@ class InvoiceSeeder extends Seeder
      */
     public function run(): void
     {
+        // Get the current count of invoices to ensure unique invoice numbers
+        $currentCount = Invoice::count();
+        
         // Create 100+ invoices spread across 2 years
         $startDate = Carbon::now()->subYears(2);
         $endDate = Carbon::now();
@@ -37,11 +40,17 @@ class InvoiceSeeder extends Seeder
                 $invoiceDate = $endDate->copy()->subDays(rand(0, 7));
             }
             
-            // Create the invoice with the specific date
+            // Generate a unique invoice number
+            $currentCount++;
+            $year = date('Y');
+            $invoiceNumber = 'INV' . $year . str_pad($currentCount, 5, '0', STR_PAD_LEFT);
+            
+            // Create the invoice with the specific date and unique invoice number
             $invoice = Invoice::factory()->create([
                 'invoice_date' => $invoiceDate,
                 'created_at' => $invoiceDate,
                 'updated_at' => $invoiceDate,
+                'invoice_number' => $invoiceNumber,
             ]);
             
             // For each invoice, create 1-6 invoice items

@@ -15,7 +15,10 @@ class QuoteSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 100+ quotes spread across 2 years
+        // Get the current count of quotes to ensure unique quote numbers
+        $currentCount = Quote::count();
+        
+        // Create quotes spread across 2 years
         $startDate = Carbon::now()->subYears(2);
         $endDate = Carbon::now();
         
@@ -37,11 +40,17 @@ class QuoteSeeder extends Seeder
                 $quoteDate = $endDate->copy()->subDays(rand(0, 7));
             }
             
-            // Create the quote with the specific date
+            // Generate a unique quote number
+            $currentCount++;
+            $year = date('Y');
+            $quoteNumber = 'QT' . $year . str_pad($currentCount, 5, '0', STR_PAD_LEFT);
+            
+            // Create the quote with the specific date and unique quote number
             $quote = Quote::factory()->create([
                 'quote_date' => $quoteDate,
                 'created_at' => $quoteDate,
                 'updated_at' => $quoteDate,
+                'quote_number' => $quoteNumber,
             ]);
             // For each quote, create 1-5 quote items
             $itemCount = rand(1, 5);

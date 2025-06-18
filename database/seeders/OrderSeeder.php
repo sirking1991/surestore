@@ -15,7 +15,10 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 100+ orders spread across 2 years
+        // Get the current count of orders to ensure unique order numbers
+        $currentCount = Order::count();
+        
+        // Create orders spread across 2 years
         $startDate = Carbon::now()->subYears(2);
         $endDate = Carbon::now();
         
@@ -37,11 +40,17 @@ class OrderSeeder extends Seeder
                 $orderDate = $endDate->copy()->subDays(rand(0, 7));
             }
             
-            // Create the order with the specific date
+            // Generate a unique order number
+            $currentCount++;
+            $year = date('Y');
+            $orderNumber = 'ORD' . $year . str_pad($currentCount, 5, '0', STR_PAD_LEFT);
+            
+            // Create the order with the specific date and unique order number
             $order = Order::factory()->create([
                 'order_date' => $orderDate,
                 'created_at' => $orderDate,
                 'updated_at' => $orderDate,
+                'order_number' => $orderNumber,
             ]);
             
             // For each order, create 1-6 order items
