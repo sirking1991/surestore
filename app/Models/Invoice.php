@@ -59,4 +59,12 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceItem::class);
     }
+    
+    /**
+     * Get the delivery associated with the invoice.
+     */
+    public function delivery(): BelongsTo
+    {
+        return $this->belongsTo(Delivery::class);
+    }
 }
