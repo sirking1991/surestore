@@ -42,4 +42,12 @@ class Product extends Model
     {
         return $this->belongsTo(ProductCategory::class);
     }
+    
+    /**
+     * Get the minimum quantities for this product across different storage locations.
+     */
+    public function storageMinQuantities()
+    {
+        return $this->hasMany(ProductStorageMinQuantity::class, 'product_id', 'id');
+    }
 }
