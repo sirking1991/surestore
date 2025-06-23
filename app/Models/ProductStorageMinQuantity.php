@@ -11,9 +11,9 @@ class ProductStorageMinQuantity extends Model
     use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
+     * The table associated with the model.
      *
-     * @var array<int, string>
+     * @var string
      */
     /**
      * The table associated with the model.
