@@ -122,20 +122,64 @@ class ProductResource extends Resource
                         Forms\Components\Repeater::make('storageMinQuantities')
                             ->relationship()
                             ->schema([
-                                Forms\Components\Select::make('storage_location_id')
-                                    ->label('Storage Location')
-                                    ->options(StorageLocation::pluck('name', 'id'))
-                                    ->required()
+                                Forms\Components\Select::make('storage_id')
+                                    ->label('Storage')
+                                    ->options(\App\Models\Storage::pluck('name', 'id'))
                                     ->searchable()
-                                    ->preload(),
+                                    ->preload()
+                                    ->live()
+                                    ->required()
+                                    ->afterStateUpdated(fn ($set) => $set('storage_location_id', null)),
+                                    
+                                Forms\Components\Select::make('storage_location_id')
+                                    ->label('Location')
+                                    ->options(function (callable $get, $state, $record) {
+                                        $storageId = $get('storage_id');
+                                        if (!$storageId) {
+                                            return [];
+                                        }
+                                        return StorageLocation::where('storage_id', $storageId)->pluck('name', 'id');
+                                    })
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->nullable()
+                                    ->placeholder('Optional'),
+                                    
                                 Forms\Components\TextInput::make('min_quantity')
-                                    ->label('Minimum Quantity')
+                                    ->label('Min Qty')
                                     ->numeric()
                                     ->default(0)
                                     ->required(),
                             ])
-                            ->columns(2)
-                            ->itemLabel(fn (array $state): ?string => StorageLocation::find($state['storage_location_id'] ?? null)?->name)
+                            ->columns(3)
+                            ->itemLabel(function (array $state, $record, $context) {
+                                // For existing records with loaded relationships
+                                if (isset($state['storage']) && is_array($state['storage'])) {
+                                    $storageName = $state['storage']['name'] ?? 'Storage';
+                                    $locationName = isset($state['storageLocation']['name']) ? ' - ' . $state['storageLocation']['name'] : '';
+                                    return $storageName . $locationName;
+                                }
+                                
+                                // For new items or when relationships aren't loaded yet
+                                $storageId = $state['storage_id'] ?? null;
+                                $locationId = $state['storage_location_id'] ?? null;
+                                
+                                if (!$storageId) return 'Select a storage';
+                                
+                                // Try to get storage name from the options if not in state
+                                $storage = $storageId ? \App\Models\Storage::find($storageId) : null;
+                                $storageName = $storage ? $storage->name : 'Storage #' . $storageId;
+                                
+                                // If we have a location ID, try to get its name
+                                $locationName = '';
+                                if ($locationId) {
+                                    $location = StorageLocation::find($locationId);
+                                    $locationName = $location ? ' - ' . $location->name : ' - Location #' . $locationId;
+                                }
+                                
+                                return $storageName . $locationName;
+                            })
                             ->addActionLabel('Add Location-Specific Minimum')
                             ->reorderable()
                             ->collapsible()
