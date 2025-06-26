@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
-use App\Models\ProductStorageMinQuantity;
 use App\Models\StorageLocation;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,7 +12,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
 {
@@ -153,32 +150,28 @@ class ProductResource extends Resource
                                     ->required(),
                             ])
                             ->columns(3)
-                            ->itemLabel(function (array $state, $record, $context) {
-                                // For existing records with loaded relationships
-                                if (isset($state['storage']) && is_array($state['storage'])) {
-                                    $storageName = $state['storage']['name'] ?? 'Storage';
-                                    $locationName = isset($state['storageLocation']['name']) ? ' - ' . $state['storageLocation']['name'] : '';
-                                    return $storageName . $locationName;
-                                }
-                                
-                                // For new items or when relationships aren't loaded yet
+                            ->itemLabel(function (array $state) {
                                 $storageId = $state['storage_id'] ?? null;
                                 $locationId = $state['storage_location_id'] ?? null;
-                                
-                                if (!$storageId) return 'Select a storage';
-                                
-                                // Try to get storage name from the options if not in state
-                                $storage = $storageId ? \App\Models\Storage::find($storageId) : null;
-                                $storageName = $storage ? $storage->name : 'Storage #' . $storageId;
-                                
-                                // If we have a location ID, try to get its name
-                                $locationName = '';
-                                if ($locationId) {
-                                    $location = StorageLocation::find($locationId);
-                                    $locationName = $location ? ' - ' . $location->name : ' - Location #' . $locationId;
+
+                                if (!$storageId) {
+                                    return 'Select a storage';
                                 }
-                                
-                                return $storageName . $locationName;
+
+                                // Get storage name from state or query
+                                $storageName = $state['storage']['name'] ?? 
+                                    \App\Models\Storage::find($storageId)?->name ?? 
+                                    'Storage #' . $storageId;
+
+                                // Get location name if exists
+                                if ($locationId) {
+                                    $locationName = $state['storageLocation']['name'] ?? 
+                                        StorageLocation::find($locationId)?->name ?? 
+                                        'Location #' . $locationId;
+                                    return "{$storageName} - {$locationName}";
+                                }
+
+                                return $storageName;
                             })
                             ->addActionLabel('Add Location-Specific Minimum')
                             ->reorderable()
@@ -242,35 +235,32 @@ class ProductResource extends Resource
                     ->numeric(0)
                     ->sortable()
                     ->color(function (Product $record) {
-                        // Check if stock is below global min_stock
                         if ($record->stock <= $record->min_stock) {
                             return 'danger';
                         }
                         
-                        // Check if stock is below any location-specific minimum
-                        $lowStockLocation = $record->storageMinQuantities
-                            ->first(fn ($item) => $record->stock <= $item->min_quantity);
-                            
-                        return $lowStockLocation ? 'warning' : 'success';
+                        return $record->storageMinQuantities
+                            ->contains(fn ($item) => $record->stock <= $item->min_quantity) 
+                            ? 'warning' 
+                            : 'success';
                     })
                     ->description(function (Product $record) {
                         $lowStockLocations = $record->storageMinQuantities
-                            ->filter(fn ($item) => $record->stock <= $item->min_quantity)
+                            ->where('min_quantity', '>=', $record->stock)
                             ->map(fn ($item) => "{$item->storageLocation->name} (≤{$item->min_quantity})")
-                            ->implode(', ');
+                            ->join(', ');
                             
-                        if ($lowStockLocations) {
-                            return "Low in: $lowStockLocations";
-                        }
-                        
-                        return null;
+                        return $lowStockLocations ? "Low in: $lowStockLocations" : null;
                     })
                     ->tooltip(function (Product $record) {
-                        $locations = $record->storageMinQuantities
-                            ->map(fn ($item) => "{$item->storageLocation->name}: {$item->min_quantity}")
-                            ->join("\n");
-                            
-                        return "Minimum quantities by location:\n$locations";
+                        if ($record->storageMinQuantities->isEmpty()) {
+                            return 'No location-specific minimum quantities set';
+                        }
+                        
+                        return "Minimum quantities by location:\n" . 
+                            $record->storageMinQuantities
+                                ->map(fn ($item) => "{$item->storageLocation->name}: {$item->min_quantity}")
+                                ->join("\n");
                     }),
                 Tables\Columns\TextColumn::make('min_stock')
                     ->label('Global Min')
