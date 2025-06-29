@@ -75,37 +75,23 @@ class ProductStorageMinQuantity extends Model
     
     /**
      * Get the display title for the item.
+     * Uses lazy loading to prevent N+1 queries.
      */
     public function getDisplayTitleAttribute(): string
     {
-        // If relationships are loaded, use them directly
-        if ($this->relationLoaded('storage') && $this->storage) {
-            $storageName = $this->storage->name;
-            $locationName = '';
-            
-            if ($this->relationLoaded('storageLocation') && $this->storageLocation) {
-                $locationName = ' - ' . $this->storageLocation->name;
-            } elseif ($this->storage_location_id) {
-                $locationName = ' - Location #' . $this->storage_location_id;
-            }
-            
-            return $storageName . $locationName;
+        if (!$this->storage_id) {
+            return 'New Storage Rule';
+        }
+
+        $storageName = $this->storage ? $this->storage->name : 'Storage #' . $this->storage_id;
+        
+        $locationName = '';
+        if ($this->storage_location_id) {
+            $locationName = $this->storageLocation 
+                ? ' - ' . $this->storageLocation->name 
+                : ' - Location #' . $this->storage_location_id;
         }
         
-        // Fallback to IDs if relationships aren't loaded
-        if ($this->storage_id) {
-            $storage = \App\Models\Storage::find($this->storage_id);
-            $storageName = $storage ? $storage->name : 'Storage #' . $this->storage_id;
-            
-            $locationName = '';
-            if ($this->storage_location_id) {
-                $location = StorageLocation::find($this->storage_location_id);
-                $locationName = $location ? ' - ' . $location->name : ' - Location #' . $this->storage_location_id;
-            }
-            
-            return $storageName . $locationName;
-        }
-        
-        return 'New Storage Rule';
+        return $storageName . $locationName;
     }
 }
