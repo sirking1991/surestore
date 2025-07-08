@@ -60,99 +60,10 @@
                 </div>
             </header>
             <main>
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- Admin Panel -->
-                        @role('admin')
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg font-medium text-gray-900">Admin Panel</h3>
-                                <div class="mt-3 text-sm text-gray-500">
-                                    <p>You have full administrative access.</p>
-                                    <ul class="list-disc pl-5 mt-2">
-                                        <li>Manage users</li>
-                                        <li>Manage roles</li>
-                                        <li>Manage permissions</li>
-                                        <li>System settings</li>
-                                    </ul>
-                                </div>
-                                <div class="mt-4">
-                                    <a href="/admin" class="text-sm font-medium text-amber-600 hover:text-amber-500">
-                                        Go to Admin Panel →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endrole
-
-                        <!-- Manager Panel -->
-                        @role('manager')
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg font-medium text-gray-900">Manager Dashboard</h3>
-                                <div class="mt-3 text-sm text-gray-500">
-                                    <p>You have manager access.</p>
-                                    <ul class="list-disc pl-5 mt-2">
-                                        <li>View reports</li>
-                                        <li>Manage content</li>
-                                        <li>View users</li>
-                                    </ul>
-                                </div>
-                                <div class="mt-4">
-                                    <a href="/manager/reports" class="text-sm font-medium text-amber-600 hover:text-amber-500">
-                                        View Reports →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endrole
-
-                        <!-- Content Management -->
-                        @can('view content')
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg font-medium text-gray-900">Content Management</h3>
-                                <div class="mt-3 text-sm text-gray-500">
-                                    <p>You can manage content.</p>
-                                    <ul class="list-disc pl-5 mt-2">
-                                        <li>View content</li>
-                                        @can('create content')
-                                        <li>Create content</li>
-                                        @endcan
-                                        @can('edit content')
-                                        <li>Edit content</li>
-                                        @endcan
-                                        @can('delete content')
-                                        <li>Delete content</li>
-                                        @endcan
-                                    </ul>
-                                </div>
-                                <div class="mt-4">
-                                    <a href="/content" class="text-sm font-medium text-amber-600 hover:text-amber-500">
-                                        Manage Content →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endcan
-
-                        <!-- Your Account -->
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg font-medium text-gray-900">Your Account</h3>
-                                <div class="mt-3 text-sm text-gray-500">
-                                    <p>Manage your account settings.</p>
-                                    <div class="mt-2">
-                                        <p><strong>Roles:</strong> {{ implode(', ', auth()->user()->getRoleNames()->toArray()) }}</p>
-                                        <p class="mt-1"><strong>Permissions:</strong></p>
-                                        <ul class="list-disc pl-5 mt-1">
-                                            @foreach(auth()->user()->getAllPermissions() as $permission)
-                                                <li>{{ $permission->name }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
+                            Welcome to your SureStore Dashboard!
                         </div>
                     </div>
                 </div>

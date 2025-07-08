@@ -54,11 +54,11 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Create roles and assign permissions
         // Admin role
-        $adminRole = Role::create(['name' => 'admin']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $adminRole->givePermissionTo(Permission::all());
 
         // Manager role
-        $managerRole = Role::create(['name' => 'manager']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager']);
         $managerRole->givePermissionTo([
             'view users',
             'create users',
@@ -73,7 +73,7 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
 
         // Staff role
-        $staffRole = Role::create(['name' => 'staff']);
+        $staffRole = Role::firstOrCreate(['name' => 'staff']);
         $staffRole->givePermissionTo([
             'view content',
             'create content',
