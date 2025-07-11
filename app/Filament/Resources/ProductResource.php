@@ -3,15 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
+use App\Models\StorageLocation;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductResource extends Resource
 {
@@ -114,9 +114,71 @@ class ProductResource extends Resource
                             ->helperText('Stock is updated automatically by transactions'),
                         Forms\Components\TextInput::make('min_stock')
                             ->numeric()
-                            ->default(0),
-                    ])
-                    ->columns(2),
+                            ->default(0)
+                            ->helperText('Global minimum stock level'),
+                        Forms\Components\Repeater::make('storageMinQuantities')
+                            ->relationship()
+                            ->schema([
+                                Forms\Components\Select::make('storage_id')
+                                    ->label('Storage')
+                                    ->options(\App\Models\Storage::pluck('name', 'id'))
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->required()
+                                    ->afterStateUpdated(fn ($set) => $set('storage_location_id', null)),
+                                    
+                                Forms\Components\Select::make('storage_location_id')
+                                    ->label('Location')
+                                    ->options(function (callable $get, $state, $record) {
+                                        $storageId = $get('storage_id');
+                                        if (!$storageId) {
+                                            return [];
+                                        }
+                                        return StorageLocation::where('storage_id', $storageId)->pluck('name', 'id');
+                                    })
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->nullable()
+                                    ->placeholder('Optional'),
+                                    
+                                Forms\Components\TextInput::make('min_quantity')
+                                    ->label('Min Qty')
+                                    ->numeric()
+                                    ->default(0)
+                                    ->required(),
+                            ])
+                            ->columns(3)
+                            ->itemLabel(function (array $state) {
+                                $storageId = $state['storage_id'] ?? null;
+                                $locationId = $state['storage_location_id'] ?? null;
+
+                                if (!$storageId) {
+                                    return 'Select a storage';
+                                }
+
+                                // Get storage name from state or query
+                                $storageName = $state['storage']['name'] ?? 
+                                    \App\Models\Storage::find($storageId)?->name ?? 
+                                    'Storage #' . $storageId;
+
+                                // Get location name if exists
+                                if ($locationId) {
+                                    $locationName = $state['storageLocation']['name'] ?? 
+                                        StorageLocation::find($locationId)?->name ?? 
+                                        'Location #' . $locationId;
+                                    return "{$storageName} - {$locationName}";
+                                }
+
+                                return $storageName;
+                            })
+                            ->addActionLabel('Add Location-Specific Minimum')
+                            ->reorderable()
+                            ->collapsible()
+                            ->collapsed()
+                            ->defaultItems(0),
+                    ]),
 
                 Forms\Components\Section::make('Media')
                     ->schema([
@@ -172,8 +234,36 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric(0)
                     ->sortable()
-                    ->color(fn (Product $record): string => $record->stock <= $record->min_stock ? 'danger' : 'success'),
+                    ->color(function (Product $record) {
+                        if ($record->stock <= $record->min_stock) {
+                            return 'danger';
+                        }
+                        
+                        return $record->storageMinQuantities
+                            ->contains(fn ($item) => $record->stock <= $item->min_quantity) 
+                            ? 'warning' 
+                            : 'success';
+                    })
+                    ->description(function (Product $record) {
+                        $lowStockLocations = $record->storageMinQuantities
+                            ->where('min_quantity', '>=', $record->stock)
+                            ->map(fn ($item) => "{$item->storageLocation->name} (≤{$item->min_quantity})")
+                            ->join(', ');
+                            
+                        return $lowStockLocations ? "Low in: $lowStockLocations" : null;
+                    })
+                    ->tooltip(function (Product $record) {
+                        if ($record->storageMinQuantities->isEmpty()) {
+                            return 'No location-specific minimum quantities set';
+                        }
+                        
+                        return "Minimum quantities by location:\n" . 
+                            $record->storageMinQuantities
+                                ->map(fn ($item) => "{$item->storageLocation->name}: {$item->min_quantity}")
+                                ->join("\n");
+                    }),
                 Tables\Columns\TextColumn::make('min_stock')
+                    ->label('Global Min')
                     ->numeric(0)
                     ->sortable()
                     ->toggleable(),
@@ -254,6 +344,12 @@ class ProductResource extends Resource
         return [
             //
         ];
+    }
+    
+    public static function getGlobalSearchResultUrl(Model $record): ?string
+    {
+        // Ensure the edit page is used for global search results
+        return self::getUrl('edit', ['record' => $record]);
     }
 
     public static function getPages(): array

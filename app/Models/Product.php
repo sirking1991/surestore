@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -41,5 +42,13 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+    
+    /**
+     * Get the minimum quantities for this product across different storage locations.
+     */
+    public function storageMinQuantities(): HasMany
+    {
+        return $this->hasMany(ProductStorageMinQuantity::class);
     }
 }
